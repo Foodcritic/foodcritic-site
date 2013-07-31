@@ -6,6 +6,7 @@ rules:
       - style
       - attributes
     applies_to: '>= 0.7.12'
+    deprecated: true
     summary: |
       This rule has been deprecated. See the discussion against
       [issue #86](https://github.com/acrmp/foodcritic/issues/86) for more
@@ -539,6 +540,7 @@ rules:
       See the discussion against
       [issue #30](https://github.com/acrmp/foodcritic/issues/30) for more
       detail.
+    deprecated: true
   - code: FC021
     name: Resource condition in provider may not behave as expected
     tags:
@@ -994,6 +996,7 @@ rules:
       This rule has been deprecated. See the discussion against
       [issue #60](https://github.com/acrmp/foodcritic/issues/60) for more
       detail.
+    deprecated: true
   - code: FC037
     name: Invalid notification action
     tags:
