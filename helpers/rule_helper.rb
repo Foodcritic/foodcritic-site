@@ -12,6 +12,10 @@ module RuleHelper
     load_rules.map{|r| expand_rule_markdown(r)}
   end
 
+  def rule_count
+    rules.count
+  end
+
   private
 
   def expand_rule_markdown(rule)
