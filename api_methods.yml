@@ -1,0 +1,572 @@
+api_methods:
+  - name: attribute_access
+    description: |
+      Find attributes accesses by type.
+
+      You might use this method to enforce local style rules on how attributes
+      are accessed.
+    examples: |
+      # All references to attributes using strings
+      # For example: node['foo']
+      attribute_access(ast, :type => :string)
+
+      # All references to attributes using symbols
+      # For example: node[:foo]
+      attribute_access(ast, :type => :symbol)
+
+      # All references to attributes using dots (vivified methods)
+      # For example: node.foo
+      attribute_access(ast, :type => :symbol)
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The AST of the cookbook recipe to check
+      - category: param
+        type: Hash
+        name: options
+        description: The options hash (see allowed values below)
+      - category: option
+        type: Symbol
+        name: ':type'
+        description: |
+          The approach used to access the attributes. One of `:string`,
+          `:symbol`, `:vivified` or `:any`.
+      - category: option
+        type: Boolean
+        name: ':ignore_calls'
+        description: |
+          Exclude attribute accesses that mix strings/symbols with dot notation.
+          Defaults to `false`.
+      - category: return
+        type: Array
+        description: The matching nodes if any
+  - name: checks_for_chef_solo?
+    description: |
+      Does the specified recipe check for
+      [Chef Solo](http://wiki.opscode.com/display/chef/Chef+Solo)?
+
+      You can use this to check for the portability of the recipe between
+      Chef Server and Chef Solo.
+    examples: |
+      # Returns true if the recipe checks for Chef Solo before using
+      # server-specific functionality.
+      checks_for_chef_solo?(ast)
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The AST of the cookbook recipe to check
+      - category: return
+        type: Boolean
+        description: |
+          True if there is a test for `Chef::Config[:solo]` in the recipe
+  - name: chef_dsl_methods
+    description: |
+      The set of methods in the Chef DSL.
+
+      You can use this to see if a method reference is part of the Chef DSL or
+      defined in a cookbook.
+    examples: |
+      # Is search a method in the Chef DSL?
+      chef_dsl_methods.include?(:search)
+      => true
+    signature:
+      - category: return
+        type: Array
+        description: |
+          Array of method symbols
+  - name: chef_solo_search_supported?
+    description: |
+      Is the [chef-solo-search](https://github.com/edelight/chef-solo-search) library available?
+
+      Will return `true` if any cookbook in the cookbook tree relative to the
+      specified recipe includes the chef-solo-search library. You can use this
+      to see if search is available in Chef Solo mode.
+    examples: |
+      # True if chef_solo_search is supported
+      chef_solo_search_supported?('foo/recipes/default.rb')
+    signature:
+      - category: param
+        type: String
+        name: recipe_path
+        description: The path to the current recipe
+      - category: return
+        type: Boolean
+        description: True if the chef-solo-search library is available.
+  - name: cookbook_name
+    description: |
+      The name of the cookbook containing the specified file.
+
+      You can use this method in rules that need to work out if recipe code
+      refers to the current cookbook: for example when looking at
+      `included_recipe` statements or LWRP usage.
+    examples: |
+      cookbook_name('foo/recipes/default.rb')
+      => "foo"
+    signature:
+      - category: param
+        type: String
+        name: file
+        description: The file in the cookbook
+      - category: return
+        type: String
+        description: The name of the containing cookbook
+  - name: declared_dependencies
+    description: |
+      The dependencies declared in cookbook metadata.
+
+      You can use this to check if all dependencies have been declared
+      correctly or to find all cookbooks that share a common dependency.
+    examples: |
+      ast = read_ast('postgresql/metadata.rb')
+      declared_dependencies(ast)
+      => ["openssl"]
+    signature:
+      - category: param
+        type: Nokogiri::XML::Node
+        name: ast
+        description: The metadata rb AST
+      - category: return
+        type: Array
+        description: List of cookbooks depended on
+  - name: file_match
+    description: |
+      Create a match for a specified file. Use this if the presence of the file
+      triggers the warning rather than content.
+
+      This is an alternative to `match` where you don't have a specific AST
+      element to associate the warning with. The call to `file_match` will
+      typically be the last line in your rule.
+    examples: |
+      file_match('foo/recipes/default.rb')
+      => {:filename=>"foo/recipes/default.rb",
+       :matched=>"foo/recipes/default.rb",
+       :line=>1,
+       :column=>1}
+    signature:
+      - category: param
+        type: String
+        name: file
+        description: The filename to create a match for
+      - category: return
+        type: Hash
+        description: Hash with the match details
+  - name: find_resources
+    description: |
+      Find Chef resources of the specified type.
+
+      Note that currently this method does not return blockless resources.
+    examples: |
+      # Returns all resources in the AST
+      find_resources(ast)
+
+      # Returns just the packages
+      find_resources(ast, :type => :package)
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The AST of the cookbook recipe to check
+      - category: param
+        type: Hash
+        name: options
+        description: The options hash (see allowed values below)
+      - category: option
+        type: Symbol
+        name: ':type'
+        description: |
+          The type of resource to look for (or `:any` for all resources)
+      - category: return
+        type: Array
+        description: AST nodes of Chef resources.
+  - name: included_recipes
+    description: |
+      Retrieve the recipes that are included within the given recipe AST.
+
+      You can use this method to determine (and validate) recipe runtime
+      dependencies.
+    examples: |
+      # Find all include_recipe statements, discarding the AST nodes to just
+      # show the recipe names.
+      included_recipes(ast).keys
+      => ["postgresql::client"]
+
+      included_recipes(ast, :with_partial_names => false).keys
+      => ["postgresql::client"]
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The recipe AST
+      - category: param
+        type: Hash
+        name: options
+        description: |
+          `:with_partial_names` - Include string literals for recipes that
+          have embedded sub-expressions. This defaults to `true` for backward
+          compatibility.
+      - category: return
+        type: Hash
+        description: |
+          Hash keyed by included recipe name where the value is the AST node
+          of the `include_recipe` statement.
+  - name: literal_searches
+    description: |
+      Searches performed by the specified recipe that are literal strings.
+      Searches with a query formed from a subexpression will be ignored.
+    examples: |
+      ast = read_ast('zenoss/recipes/server.rb')
+      literal_searches(ast).size
+      => 3
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The AST of the cookbook recipe to check
+      - category: return
+        type: Array
+        description: The matching nodes
+  - name: match
+    description: |
+      Create a match from the specified node.
+
+      Return matches when a rule has matched against a recipe. A call to `match`
+      is typically the last line of your rule.
+
+      Ensure that the AST node you are passing to this method has a descendant
+      `pos` node so that the match can be associated with a line in the file.
+    examples: |
+      # You will frequently use map to apply the match function to an array of
+      # nodes that you consider matches for your rule.
+      attribute_access(ast, :type => :string).map{|s| match(s)}
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: node
+        description: The node to create a match for
+      - category: return
+        type: Hash
+        description: |
+          Hash with the matched node name and position with the recipe
+  - name: notifications
+    description: |
+      Provides convenient access to resource notification details.
+      You can pass either the AST for an individual resource or the entire
+      recipe to this method. Note that a resource may be registered for
+      multiple notifications / subscriptions.
+
+      While Chef permits either `:immediate` or `:immediately` to be specified
+      in cookbooks, the timing for both will be returned as `:immediate` to
+      remove the need for callers to switch on both values.
+    examples: |
+      find_resources(ast).select do |resource|
+        notifications(resource).any? do |notification|
+          ! [:delayed, :immediate].include? notification[:timing]
+        end
+      end
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The AST to check for notifications.
+      - category: return
+        type: Array
+        description: |
+          A flat array of notification hashes.
+
+          * `:type` - Either `:notifies` or `:subscribes`
+          * `:resource_type` - The type of resource to be notified
+          * `:resource_name` - The name of the resource to be notified. This
+            can be an AST if the resource name is not a string literal.
+          * `:action` - The notification action
+          * `:timing` - Either `:delayed` or `:immediate`
+          * `:style` - The syntax used in the cookbook to define the
+            notification, either `:old` or `:new`
+  - name: os_command?
+    description: |
+      Does the provided string look like an Operating System command? This is a
+      rough heuristic to be taken with a pinch of salt.
+    signature:
+      - category: param
+        type: String
+        name: str
+        description: The string to check
+      - category: return
+        type: Boolean
+        description: |
+          True if this string might be an OS command
+  - name: read_ast
+    description: |
+      Read the AST for the given Ruby or Erb source file.
+
+      Many of the other functions documented here take an `ast` as an argument.
+      You can also use Nokogiri's support querying the AST with XPath or CSS
+      to implement your own rules.
+    examples: |
+      # Normally the recipe AST will be passed in to your rule without you
+      # needing to use read_ast.
+
+      # However if you need to you can read in the AST for a cookbook recipe
+      # directly.
+      ast = read_ast('apache2/recipes/default.rb')
+    signature:
+      - category: param
+        type: String
+        name: file
+        description: The file to read
+      - category: return
+        type: 'Nokogiri::XML::Node'
+        description: |
+          The recipe AST
+  - name: resource_action?
+    description: |
+      Determine if an action is valid for the given resource type.
+    examples: |
+      resource_action?(:service, :restart)
+      => true
+    signature:
+      - category: param
+        type: Symbol
+        name: resource_type
+        description: The type of resource
+      - category: param
+        type: Symbol
+        name: action
+        description: The name of the action
+      - category: return
+        type: Boolean
+        description: |
+          True if the action is valid for this type of resource.
+  - name: resource_attribute
+    description: |
+      Retrieve a single-valued attribute from the specified resource.
+    examples: |
+      # Given resource is a package
+      resource_attribute(resource, 'action')
+      => :install
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: resource
+        description: The resource AST to lookup the attribute under
+      - category: param
+        type: String
+        name: name
+        description: The attribute name
+      - category: return
+        type: String
+        description: |
+          The attribute value for the specified attribute
+  - name: resource_attribute?
+    description: |
+      Is the specified attribute valid for the type of resource? Note that this
+      method will return true if the `resource_type` is not recognised.
+    examples: |
+      resource_attribute?(:file, :mode)
+      => true
+
+      resource_attribute?(:file, :size)
+      => false
+
+      # If the resource is not a Chef built-in then the attribute is always
+      # valid
+      resource_attribute?(:my_custom_resource, :whatever)
+      => true
+    signature:
+      - category: param
+        type: Symbol
+        name: resource_type
+        description: The type of Chef resource
+      - category: param
+        type: Symbol
+        name: attribute_name
+        description: The attribute name
+      - category: return
+        type: Boolean
+        description: |
+          True if the attribute is valid for this type of resource
+  - name: resource_attributes
+    description: |
+      Retrieve all attributes from the specified resource.
+
+      Use this method for convenient access to the resource attributes without
+      needing to query the AST.
+    examples: |
+      resource_attributes(resource)
+      => {:name=>"zenoss", "arch"=>"kernel", "action"=>:install}
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: resource
+        description: The resource AST
+      - category: return
+        type: Hash
+        description: |
+          The resource attributes
+  - name: resource_attributes_by_type
+    description: |
+      Retrieve the attributes as a hash for all resources of a given type.
+
+      Use this if you want to compare the attributes and values used by
+      resources of the same type.
+    examples: |
+      # The values of the Hash (ignored here) are arrays of resource ASTs.
+      resource_attributes_by_type(ast).keys.sort
+      => ["apt_package",
+       "apt_repository",
+       "execute",
+       "package",
+       "ruby_block"]
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The recipe AST
+      - category: return
+        type: Hash
+        description: |
+          Resources keyed by type, with an array for each
+  - name: resource_name
+    description: |
+      Retrieve the name attribute associated with the specified resource.
+    examples: |
+      resource_name(resource)
+      => "zenoss"
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: resource
+        description: The resource AST to lookup the name attribute under
+      - category: return
+        type: String
+        description: |
+          The name attribute value
+  - name: resource_type
+    description: |
+      Return the type, e.g. 'package' of a given resource.
+
+      You could use this if you wanted to take different action in your rule
+      based on the resource type.
+    examples: |
+      resource_type(resource)
+      => "yum_package"
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: resource
+        description: The resource AST
+      - category: return
+        type: String
+        description: |
+          The type of resource
+  - name: resources_by_type
+    description: |
+      Retrieve all resources of a given type.
+
+      The key of the hash is the type of resource (as a string). The value is
+      an array of Hashes.
+    examples: |
+      resources_by_type(ast).keys
+      => ["yum_key",
+       "yum_repository",
+       "package",
+       "service",
+       "yum_package",
+       "apt_repository",
+       "apt_package"]
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The recipe AST
+      - category: return
+        type: Hash
+        description: |
+          The matching resources
+  - name: ruby_code?
+    description: |
+      Does the provided string look like ruby code?
+      This does not evaluate the expression, instead only checking that it
+      appears syntactically valid.
+
+      You can use this method to check that `ruby_block` resources and recipes
+      themselves look like Ruby code.
+    examples: |
+      # Lots of strings are well-formed Ruby statements, including some strings
+      # you might not expect:
+      ruby_code?('System.out.println("hello world");')
+      => true
+
+      # This operating system command doesn't look like valid Ruby but others
+      # might.
+      ruby_code?('find -type f -print')
+      => false
+    signature:
+      - category: param
+        type: String
+        name: str
+        description: The string to check for rubiness
+      - category: return
+        type: Boolean
+        description: |
+          `True` if this string could be syntactically valid Ruby
+  - name: searches
+    description: |
+      Searches performed by the specified recipe.
+      In contrast to `literal_searches` this method returns all searches.
+
+      You could use this method to identify all searches that search for a
+      particular type of object, or to identify searches that are valid
+      for a particular Chef version.
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The AST of the cookbook recipe to check.
+      - category: return
+        type: Array
+        description: |
+          The AST nodes in the recipe where searches are performed
+  - name: standard_cookbook_subdirs
+    description: |
+      The list of standard cookbook sub-directories.
+
+      You can use this method when you need to traverse cookbooks manually
+      yourself in order to determine directories to descend into.
+    examples: |
+      standard_cookbook_subdirs
+      => ["attributes",
+       "definitions",
+       "files",
+       "libraries",
+       "providers",
+       "recipes",
+       "resources",
+       "templates"]
+    signature:
+      - category: return
+        type: Array
+        description: |
+          The standard list of directories.
+  - name: valid_query?
+    description: |
+      Is this a valid Lucene query?
+
+      Use this method when acting on searches in a recipe in order to check that
+      they are valid before continuing with the rest of your rule.
+    examples: |
+      valid_query?('run_list:recipe[foo::bar]')
+      => false
+
+      valid_query?('run_list:recipe\[foo\:\:bar\]')
+      => true
+    signature:
+      - category: param
+        type: String
+        name: query
+        description: The query to check for syntax errors
+      - category: return
+        type: Boolean
+        description: |
+          `True` if the query is well-formed

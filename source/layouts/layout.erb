@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= current_page.data.title || "Foodcritic" %></title>
+    <%= stylesheet_link_tag "bootstrap.min", "rouge" %>
+  </head>
+  <body class="<%= page_classes %>">
+
+    <div class="navbar">
+      <a class="navbar-brand" href="#">Foodcritic</a>
+      <ul class="nav navbar-nav">
+        <li><a href="#choosing-rules-to-run">Choosing rules to run</a></li>
+        <li><a href="#extra-rules">Extra rules</a></li>
+        <li><a href="https://github.com/acrmp/foodcritic">Code</a></li>
+        <li><a href="https://travis-ci.org/acrmp/foodcritic">Travis CI</a></li>
+        <li><a href="https://github.com/acrmp/foodcritic/issues?sort=created&direction=desc&state=open">Issues</a></li>
+        <li><a href="https://github.com/acrmp/foodcritic/blob/master/CHANGELOG.md">Changelog</a></li>
+        <li><a href="https://raw.github.com/acrmp/foodcritic/master/LICENSE">License</a></li>
+      <ul>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>

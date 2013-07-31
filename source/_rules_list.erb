@@ -1,0 +1,18 @@
+<div class="row">
+  <% in_two(rules) do |half| %>
+  <div class="col-lg-6">
+    <ul class="list-group">
+      <% half.each do |rule| %>
+         <li class="list-group-item">
+          <span class="badge"><%= rule['code'] %></span>
+          <% if rule['tags'] %>
+            <a href="#<%= rule['code'] %>"><%= rule['name'] %></a>
+          <% else %>
+            <%= rule['name'] %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+</div>

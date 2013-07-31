@@ -1,0 +1,57 @@
+<h2 id="choosing-rules-to-run">Choosing which rules to run</h2>
+<p>
+  Foodcritic comes with a bunch of rules built-in. You will probably find
+  some of them useful and others annoying. The trick to only running the
+  rules you actually care about are what foodcritic calls <b>tags</b>.
+</p>
+
+<h3>Tags</h3>
+<p>
+  Each rule has a number of associated tags. You can filter which rules are
+  actually checked by specifying the tags that you want to apply at the
+  command line.
+
+<h4>Only check against correctness rules</h4>
+<p>
+  As an example, the following arguments will run foodcritic
+  but only showing warnings for rules tagged with the <code>correctness</code> tag.
+</p>
+<code>$ foodcritic -t correctness</code>
+
+<h4>Excluding a particular rule</h4>
+<p>
+  Each rule is tagged with its own code, normally something like
+  <code>FC123</code>. To avoid checking a particular rule use the
+  <code>~</code> (tilde) modifier at the command line.
+</p>
+<code>$ foodcritic -t ~FC002</code>
+
+<h4>Running only rules tagged with both tags</h4>
+<p>
+  Let's say we want to only check against rules that are tagged with
+  <b>both</b> <code>style</code> and <code>services</code>. We don't want to
+  check against rules that have only one or the other. Our command line to do
+  this would look like this:
+</p>
+<code>$ foodcritic -t style -t services</code>
+
+<h4>Running rules tagged with either tag</h4>
+<p>
+  Alternatively we might want to run rules that are tagged with either
+  <code>style</code> or <code>services</code>. To do this we separate the
+  rule codes with a comma:
+</p>
+<code>$ foodcritic -t style,services</code>
+
+<h3>Saving your tag options</h3>
+
+<p>
+  You can create a <code>.foodcritic</code> file within each cookbook to
+  define the rules that you want to have checked when foodcritic runs.
+  <code>$ echo "style,services" &gt; my_cookbook/.foodcritic</code>
+</p>
+<p>
+  When you run foodcritic with no arguments and a <code>.foodcritic</code>
+  file is present in the cookbook directory it will check only the tags you
+  have specified in that file.
+</p>

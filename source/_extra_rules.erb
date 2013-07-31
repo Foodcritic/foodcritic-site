@@ -1,0 +1,41 @@
+<h2 id="extra-rules">Extra Rules</h2>
+<p>
+  Awesome people have written additional rules that you can use with
+  foodcritic.
+</p>
+
+<h3>CustomInk Foodcritic Rules</h3>
+
+<p>
+  <a href="https://github.com/customink-webops/foodcritic-rules">https://github.com/customink-webops/foodcritic-rules</a>
+</p>
+<%= partial "rules_list", :locals => {:rules => [
+  {'code' => 'CINK001', 'name' => 'Missing CHANGELOG in markdown format'},
+  {'code' => 'CINK002', 'name' => 'Prefer single-quoted strings'},
+  {'code' => 'CINK003', 'name' => 'Don\'t hardcode apache user or group'}
+]} %>
+
+<h3>Etsy Foodcritic Rules</h3>
+
+<p>
+  <a href="https://github.com/etsy/foodcritic-rules">https://github.com/etsy/foodcritic-rules</a>
+</p>
+<%= partial "rules_list", :locals => {:rules => [
+  {'code' => 'ETSY001', 'name' => 'Package or yum_package resource used with :upgrade action'},
+  {'code' => 'ETSY004', 'name' => 'Execute resource defined without conditional or action :nothing'},
+  {'code' => 'ETSY005', 'name' => 'Action :restart sent to a core service'},
+  {'code' => 'ETSY006', 'name' => 'Execute resource used to run chef-provided command'},
+  {'code' => 'ETSY007', 'name' => 'Package or yum_package resource used to install core package without specific version number'}
+]} %>
+
+<h3>Lookout Foodcritic Rules</h3>
+
+<p>
+  <a href="https://github.com/lookout/lookout-foodcritic-rules">https://github.com/lookout/lookout-foodcritic-rules</a>
+</p>
+<%= partial "rules_list", :locals => {:rules => [
+  {'code' => 'LKOUT001', 'name' => 'Include a chefspec test for every recipe'},
+  {'code' => 'LKOUT002', 'name' => 'apt_repository should not download a key over plain http'},
+  {'code' => 'LKOUT003', 'name' => 'specify a uid and gid when creating a user'},
+  {'code' => 'LKOUT004', 'name' => 'specify a gid when creating a group'}
+]} %>

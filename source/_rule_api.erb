@@ -1,0 +1,21 @@
+<h2>Rule API Reference</h2>
+
+<% api_methods.each do |api_method| %>
+  <h3 id="<%= api_method['name'] %>"><%= api_method['name'] %></h3>
+  <p><%= api_method['description'] %></p>
+  <% if api_method['examples'] %>
+    <% code("ruby") do %><%= api_method['examples'] %><% end %>
+  <% end %>
+  <table class="table table-striped table-bordered">
+    <tr><th>category</th><th>type</th><th>name</th><th>description</th></tr>
+    <% api_method['signature'].each do |arg| %>
+    <tr>
+      <td><%= arg['category'] %></td>
+      <td><code><%= arg['type'] %></code></td>
+      <td><% if arg['name'] %><code><%= arg['name'] %></code><% end %></td>
+      <td><p><%= arg['description'] %></p></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+

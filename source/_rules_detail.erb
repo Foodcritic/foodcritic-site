@@ -1,0 +1,38 @@
+<% rules.each do |rule| %>
+  <section id="<%= rule['code'] %>">
+    <div class="page-header">
+      <h3><%= rule['code'] %>: <%= rule['name'] %></h3>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <p>
+          <% rule['tags'].each do |tag| %>
+            <code><%= tag %></code>
+          <% end %>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <p>
+          <%= rule['summary'] %>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <% Array(rule['examples']).each do |example| %>
+      <div class="col-lg-6">
+        <strong><%= example['title'] %></strong>
+        <p><%= example['text'] %></p>
+      </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <% Array(rule['examples']).each do |example| %>
+      <div class="col-lg-6">
+        <% code("ruby") do %><%= example['code'] %><% end %>
+      </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
