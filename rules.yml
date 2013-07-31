@@ -1208,3 +1208,31 @@ rules:
       the cookbook `metadata.rb` file. It's a good idea to specify a name in
       your cookbook metadata to avoid breakage if the name of the containing
       directory changes.
+  - code: FC046
+    name: Attribute assignment uses assign unless nil
+    tags:
+      - attributes
+      - correctness
+    summary: |
+      It is a
+      [common convention in Ruby development](http://www.rubyinside.com/what-rubys-double-pipe-or-equals-really-does-5488.html)
+      to use `||=` to assign a value to variable if it is `false` or `nil`.
+      Frequently developers with earlier exposure to Ruby attempt to use the
+      same approach to assign a default value to node attributes within Chef.
+
+      This doesn't work correctly because Chef auto-vivifies attributes so a
+      missing attribute is never falsey.
+    examples:
+      - title: Using assign unless nil with node attributes
+        text: |
+          This example matches the FC046 rule because it uses assign unless nil
+          (`||=`) with node attributes.
+        code: |
+          # Don't do this
+          default['somevalue'] ||= []
+      - title: Modified version
+        text: |
+          This modified example would not match the FC046 rule because the
+          assign unless nil expression has been replaced with `default_unless`.
+        code: |
+          default_unless['somevalue'] = []
