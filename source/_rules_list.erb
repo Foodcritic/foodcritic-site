@@ -5,11 +5,13 @@
       <% half.each do |rule| %>
          <li class="list-group-item">
           <span class="badge"><%= rule['code'] %></span>
+          <% if rule['deprecated'] %><del><% end %>
           <% if rule['tags'] %>
             <a href="#<%= rule['code'] %>"><%= rule['name'] %></a>
           <% else %>
             <%= rule['name'] %>
           <% end %>
+          <% if rule['deprecated'] %></del><% end %>
         </li>
       <% end %>
     </ul>
