@@ -13,7 +13,7 @@ module RuleHelper
   end
 
   def rule_count
-    rules.count
+    rules.reject{|r| r['deprecated']}.count
   end
 
   private

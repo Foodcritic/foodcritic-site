@@ -49,4 +49,24 @@ describe RuleHelper do
     end
   end
 
+  describe "#rule_count" do
+    let(:h) do
+      Object.new.extend(RuleHelper).tap do |h|
+        h.instance_eval do
+          def load_rules
+            [
+              {'summary' => 'rule 1'},
+              {'summary' => 'rule 2'},
+              {'summary' => 'rule 3', 'deprecated' => true},
+              {'summary' => 'rule 4'}
+            ]
+          end
+        end
+      end
+    end
+    it "does not include deprecated rules in the rule count total" do
+      h.rule_count.must_equal 3
+    end
+  end
+
 end
