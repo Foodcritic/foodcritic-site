@@ -20,6 +20,10 @@ module RuleHelper
     rules.map{|r| r['tags']}.flatten.sort.uniq
   end
 
+  def rules_by_tag
+    Hash[tags.map{|t| [t, rules.select{|r| r['tags'].include?(t)}]}]
+  end
+
   private
 
   def expand_rule_markdown(rule)

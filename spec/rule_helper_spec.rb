@@ -92,6 +92,37 @@ describe RuleHelper do
     end
   end
 
+  describe "#rules_by_tag" do
+    it "returns an empty when there are no rules" do
+      h.set_rules([])
+      h.rules_by_tag.must_be_empty
+    end
+    describe :non_empty do
+      before do
+        h.set_rules([
+          {'code' => 'FC512', 'tags' => %w{antwerp brussels}},
+          {'code' => 'FC513', 'tags' => %w{ghent}},
+          {'code' => 'FC514', 'tags' => %w{bruges brussels}},
+        ])
+      end
+      it "has a key for each unique tag in order" do
+        h.rules_by_tag.keys.must_equal h.tags
+      end
+      it "has values that are rules tagged with that tag" do
+        h.rules_by_tag.must_equal({
+          'antwerp' => [{'code' => 'FC512', 'tags' => %w{antwerp brussels}, 'examples' => []}],
+          'bruges' => [{'code' => 'FC514', 'tags' => %w{bruges brussels}, 'examples' => []}],
+          'brussels' => [{'code' => 'FC512', 'tags' => %w{antwerp brussels},
+                          'examples' => []},
+                         {'code' => 'FC514', 'tags' => %w{bruges brussels},
+                          'examples' => []}],
+          'ghent' => [{'code' => 'FC513', 'tags' => %w{ghent},
+                       'examples' => []}]
+        })
+      end
+    end
+  end
+
   let(:h) do
     Object.new.extend(RuleHelper).tap do |h|
       h.instance_eval do
