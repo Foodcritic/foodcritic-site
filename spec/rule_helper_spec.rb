@@ -4,7 +4,6 @@ require_relative '../helpers/rule_helper'
 describe RuleHelper do
 
   describe "#rules" do
-    let(:h){ Object.extend(RuleHelper) }
     describe :basic_properties do
       it "is non-empty set of rules" do
         h.rules.wont_be_empty
@@ -35,9 +34,11 @@ describe RuleHelper do
       end
     end
     describe :markdown_expansion do
-      let(:h) do
-        helper_with_rule :summary => 'foo *bar*',
-          :example => 'An example with `markdown`'
+      before do
+        h.set_rules([
+          {'summary' => 'foo *bar*',
+           'examples' => [{'text' => 'An example with `markdown`'}]}
+        ])
       end
       it "expands markdown in the rule summary" do
         h.rules.first['summary'].must_equal("<p>foo <em>bar</em></p>\n")
@@ -50,22 +51,58 @@ describe RuleHelper do
   end
 
   describe "#rule_count" do
-    let(:h) do
-      Object.new.extend(RuleHelper).tap do |h|
-        h.instance_eval do
-          def load_rules
-            [
-              {'summary' => 'rule 1'},
-              {'summary' => 'rule 2'},
-              {'summary' => 'rule 3', 'deprecated' => true},
-              {'summary' => 'rule 4'}
-            ]
-          end
-        end
-      end
+    before do
+      h.set_rules([
+        {'summary' => 'rule 1'},
+        {'summary' => 'rule 2'},
+        {'summary' => 'rule 3', 'deprecated' => true},
+        {'summary' => 'rule 4'}
+      ])
     end
     it "does not include deprecated rules in the rule count total" do
       h.rule_count.must_equal 3
+    end
+  end
+
+  describe "#tags" do
+    it "returns an empty when there are no rules" do
+      h.set_rules([])
+      h.tags.must_be_empty
+    end
+    it "includes all tags from the ruleset" do
+      h.set_rules([
+        {'code' => 'FC512', 'tags' => %w{correctness pedantry}},
+        {'code' => 'FC513', 'tags' => %w{style}},
+      ])
+      h.tags.must_equal %w{correctness pedantry style}
+    end
+    it "sorts tags alphabetically" do
+      h.set_rules([
+        {'code' => 'FC512', 'tags' => %w{red green}},
+        {'code' => 'FC513', 'tags' => %w{blue}},
+      ])
+      h.tags.must_equal %w{blue green red}
+    end
+    it "returns a unique set of tags" do
+      h.set_rules([
+        {'code' => 'FC512', 'tags' => %w{lion hippo}},
+        {'code' => 'FC513', 'tags' => %w{hippo}},
+      ])
+      h.tags.must_equal %w{hippo lion}
+    end
+  end
+
+  let(:h) do
+    Object.new.extend(RuleHelper).tap do |h|
+      h.instance_eval do
+        alias :original_load_rules :load_rules
+        def load_rules
+          @rules || original_load_rules
+        end
+        def set_rules(rules)
+          @rules = rules
+        end
+      end
     end
   end
 

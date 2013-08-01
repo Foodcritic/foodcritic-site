@@ -16,6 +16,10 @@ module RuleHelper
     rules.reject{|r| r['deprecated']}.count
   end
 
+  def tags
+    rules.map{|r| r['tags']}.flatten.sort.uniq
+  end
+
   private
 
   def expand_rule_markdown(rule)

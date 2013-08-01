@@ -24,20 +24,6 @@ def helper_with_api_method(options={})
   end
 end
 
-def helper_with_rule(options={})
-  Object.extend(RuleHelper).tap do |h|
-    h.instance_eval do
-      @options = options
-      def load_rules
-        [{
-          'summary'  => @options[:summary],
-          'examples' => [{'text' => @options[:example]}]
-        }]
-      end
-    end
-  end
-end
-
 def well_formed_ruby?(code_string)
   begin
     eval "def fc_well_formed\n#{code_string}\nend"
