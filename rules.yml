@@ -1239,3 +1239,31 @@ rules:
           assign unless nil expression has been replaced with `default_unless`.
         code: |
           default_unless['somevalue'] = []
+  - code: FC047
+    name: Attribute assignment does not specify precedence
+    tags:
+      - attributes
+      - correctness
+    summary: |
+      From Chef 11 it is no longer possible to set attributes without specifying
+      their precedence level. For more information refer to the list of
+      [Breaking Changes in Chef 11](http://docs.opscode.com/breaking_changes_chef_11.html#implicit-writes-removed)
+      .
+    examples:
+      - title: Assign an attribute value without specifying precedence
+        text: |
+          This example matches the FC047 rule because it writes to the attribute
+          without specifying the precedence level to set.
+
+          This will work in Chef versions < 11 but you should prefer the new
+          syntax.
+        code: |
+          # Don't do this
+          node['foo'] = 'bar'
+      - title: Modified version
+        text: |
+          This modified example would not match the FC047 rule because the
+          attribute assignment has been updated to specify a precedence level
+          of `normal`.
+        code: |
+          node.normal['foo'] = 'bar'
