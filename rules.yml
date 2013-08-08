@@ -1247,8 +1247,7 @@ rules:
     summary: |
       From Chef 11 it is no longer possible to set attributes without specifying
       their precedence level. For more information refer to the list of
-      [Breaking Changes in Chef 11](http://docs.opscode.com/breaking_changes_chef_11.html#implicit-writes-removed)
-      .
+      [Breaking Changes in Chef 11](http://docs.opscode.com/breaking_changes_chef_11.html#implicit-writes-removed).
     examples:
       - title: Assign an attribute value without specifying precedence
         text: |
