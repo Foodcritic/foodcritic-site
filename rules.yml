@@ -1267,3 +1267,37 @@ rules:
           of `normal`.
         code: |
           node.normal['foo'] = 'bar'
+  - code: FC048
+    name: Prefer Mixlib::ShellOut
+    tags:
+      - style
+      - processes
+    summary: |
+      Normally to execute an operating system command with Chef you would use
+      a built-in resource such as the `execute` resource.
+
+      You might also have a need to spawn processes from Ruby, either inline
+      or within a `ruby_block`. There are many different ways to do this in Ruby
+      - my favourite reference is
+      [Jesse Storimer's Working with Unix Processes](http://www.jstorimer.com/products/working-with-unix-processes).
+
+      Chef comes with a library called
+      [Mixlib::ShellOut](https://github.com/opscode/mixlib-shellout) that
+      provides a more convenient interface and it is idiomatic to use it rather
+      than the backtick `` ` `` or `%x{}` syntaxes.
+    examples:
+      - title: Uses %x{} to shellout
+        text: |
+          This example matches the FC048 rule because it uses the `%x{}` sigil.
+        code: |
+          # Don't do this
+          result = %x{some_command}
+          raise 'Problem executing some_command' unless $?.success?
+      - title: Modified version
+        text: |
+          This modified example would not match the FC048 rule because it is
+          using the `Mixlib::ShellOut` library.
+        code: |
+          cmd = Mixlib::ShellOut.new('some_command')
+          cmd.run_command
+          cmd.error!
