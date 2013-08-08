@@ -437,10 +437,25 @@ rules:
       - lwrp
     applies_to: '>= 0.7.12'
     summary: |
-      This warning means that the LWRP will not currently trigger notifications
+      This warning means that the LWRP will not currently trigger
+      [notifications](http://docs.opscode.com/chef/resources.html#notifications)
       to other resources. This can be a source of difficult to track down bugs.
 
-      * [http://wiki.opscode.com/display/chef/Resources#Resources-Notifications](http://wiki.opscode.com/display/chef/Resources#Resources-Notifications)
+      There are several ways of marking that the resource state has
+      changed:
+
+      * Explicitly call `new_resource.updated_by_last_action`. This is the
+        approach used historically with older versions of Chef.
+      * Surround the action in a `converge_by` block. This is done when
+        [implementing Why-Run support](http://dougireton.com/blog/2013/01/07/creating-an-lwrp-part-2/)
+        and will also ensure notifications are sent. This approach is available
+        from Chef 10.14.0.
+      * Add `use_inline_resources` to the top of the provider file. This means
+        that the resources you define in your action are run in their own
+        [self-contained Chef run](http://docs.opscode.com/lwrp_common_inline_compile.html)
+        and your provider will send notifications if any of the nested resources
+        in your actions are updated. This approach is available from Chef 11 and
+        may become the default behaviour in a future version.
     examples:
       - title: Provider that does not send notifications
         text: |
@@ -453,14 +468,28 @@ rules:
           end
       - title: Modified version
         text: |
-          The call to `updated_by_last_action` ensures that notifications will
-          work correctly.
+          Any of the three approaches shown below will ensure that
+          notifications are sent correctly.
         code: |
+          # Approach 1: Using updated_by_last_action
           action :create do
             # create action implementation
 
             # My state has changed so I'd better notify observers
             new_resource.updated_by_last_action(true)
+          end
+
+          # Approach 2: Using converge_by
+          action :create do
+            converge_by("Creating my_resource #{new_resource.name}") do
+              # create action implementation
+            end
+          end
+
+          # Approach 3: Using use_inline_resources
+          use_inline_resources
+          action :create do
+            # create action implementation
           end
   - code: FC018
     name: LWRP uses deprecated notification syntax
