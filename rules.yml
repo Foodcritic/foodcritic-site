@@ -1329,3 +1329,13 @@ rules:
           cmd = Mixlib::ShellOut.new('some_command')
           cmd.run_command
           cmd.error!
+  - code: FC049
+    name: Role name does not match containing file name
+    tags:
+      - style
+      - roles
+    summary: |
+      This warning is shown if you declare a `name` in a
+      [role file](http://docs.opscode.com/essentials_roles.html#ruby-dsl)
+      that does not match the containing file name. Using the same name for both
+      is more consistent.
