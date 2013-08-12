@@ -1339,3 +1339,31 @@ rules:
       [role file](http://docs.opscode.com/essentials_roles.html#ruby-dsl)
       that does not match the containing file name. Using the same name for both
       is more consistent.
+  - code: FC050
+    name: Name includes invalid characters
+    tags:
+      - correctness
+      - environments
+      - roles
+    summary: |
+      This warning is shown if the name declared in a [role](http://docs.opscode.com/essentials_roles.html#ruby-dsl)
+      or [environment](http://docs.opscode.com/essentials_environments.html#ruby-dsl)
+      file contains characters that are not allowed.
+
+      "[Names should be] made up of letters (upper-and lower-case), numbers, underscores, and hyphens:
+      `[A-Z][a-z][0-9]` and `[_-]`. Spaces are not allowed."
+    examples:
+      - title: Name includes invalid characters
+        text: |
+          This example matches the FC050 rule because the name includes a space character.
+        code: |
+          # Don't do this
+          name "web server"
+          run_list "recipe[apache2]"
+      - title: Modified version
+        text: |
+          This modified example would not match the FC050 rule because the space
+          has been removed from the role name.
+        code: |
+          name "webserver"
+          run_list "recipe[apache2]"
