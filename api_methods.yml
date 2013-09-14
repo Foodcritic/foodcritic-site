@@ -130,6 +130,44 @@ api_methods:
       - category: return
         type: Array
         description: List of cookbooks depended on
+  - name: field
+    description: |
+      The key / value pair in a ruby environment or role file.
+    examples: |
+      # Retrieve the key and value of the 'name' field
+      field(ast, :name)
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The environment or role AST
+      - category: param
+        type: String
+        name: field_name
+        description: The name of the field to retrieve
+      - category: return
+        type: 'Nokogiri::XML::Node'
+        description: |
+          The matched key / value pair
+  - name: field_value
+    description: |
+      Retrieve the value from a ruby environment or role file.
+    examples: |
+      # Retrieve the value of the 'name' field
+      field_value(ast, :name)
+    signature:
+      - category: param
+        type: 'Nokogiri::XML::Node'
+        name: ast
+        description: The environment or role AST
+      - category: param
+        type: String
+        name: field_name
+        description: The name of the field to retrieve
+      - category: return
+        type: String
+        description: |
+          The string value if specified as a literal.
   - name: file_match
     description: |
       Create a match for a specified file. Use this if the presence of the file
@@ -549,6 +587,24 @@ api_methods:
         type: Array
         description: |
           The standard list of directories.
+  - name: templates_included
+    description: |
+      List of templates that are included, including transitive includes.
+    examples: |
+      templates_included(template_paths(filename), template_path)
+    signature:
+      - category: param
+        type: Array
+        name: all_templates
+        description: The set of all templates
+      - category: param
+        type: String
+        name: template_path
+        description: The path to look under
+      - category: return
+        type: Array
+        description: |
+          The set of included templates
   - name: valid_query?
     description: |
       Is this a valid Lucene query?
