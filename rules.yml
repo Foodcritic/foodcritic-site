@@ -1367,3 +1367,11 @@ rules:
         code: |
           name "webserver"
           run_list "recipe[apache2]"
+  - code: FC051
+    name: Template partials loop indefinitely
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a template uses template partials in a way that
+      would cause an infinite loop. For example if two template partials both
+      include each other.
