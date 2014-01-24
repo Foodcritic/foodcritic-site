@@ -3,3 +3,6 @@
 /.sass-cache
 .DS_Store
 *.swp
+*.docset
+docset/_output
+source/dash/Foodcritic.tgz
