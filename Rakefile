@@ -20,7 +20,7 @@ def build_docset
 			system("tar --exclude='.DS_Store' -cvzf Foodcritic.tgz Foodcritic.docset")
 		}
 		# Copy tarball to source
-		system("cp -rf docset/_output/Foodcritic.tgz source/dash/Foodcritic.tgz")
+		system("cp -rf docset/_output/Foodcritic.tgz build/dash/Foodcritic.tgz")
 end
 
 task :default => [:test]
@@ -36,7 +36,7 @@ end
 
 desc "Deploy the website"
 task :deploy => [:test] do
-	build_docset
   sh "middleman build"
-
+  build_docset
+  sh "middleman s3_sync"
 end
