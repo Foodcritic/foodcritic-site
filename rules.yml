@@ -50,7 +50,7 @@ rules:
       Where your cookbooks make use of features that only exist in a Chef Server
       based setup you should check whether you are running in solo mode.
 
-      * [http://wiki.opscode.com/display/chef/Chef+Solo](http://wiki.opscode.com/display/chef/Chef+Solo)
+      * [http://docs.opscode.com/chef_solo.html](http://docs.opscode.com/chef_solo.html)
     examples:
       - title: Does not check for Chef Solo
         text: |
@@ -77,7 +77,7 @@ rules:
       Chef `execute` resource rather than the more idiomatic `service` resource.
       You can read more about the service resource here:
 
-      * [http://wiki.opscode.com/display/chef/Resources#Resources-Service](http://wiki.opscode.com/display/chef/Resources#Resources-Service)
+      * [http://docs.opscode.com/resource_service.html](http://docs.opscode.com/resource_service.html)
     examples:
       - title: Uses execute to control a service
         text: |
@@ -132,9 +132,11 @@ rules:
         text: |
           This modified example would not match the FC005 rule. It takes
           advantage of the fact that Chef processes recipes in two distinct
-          phases:
+          phases. In the first 'compile' phase it builds the resource
+          collection. In the second phase it configures the node against the
+          resource collection.
 
-          * [http://wiki.opscode.com/display/chef/Anatomy+of+a+Chef+Run](http://wiki.opscode.com/display/chef/Anatomy+of+a+Chef+Run)
+          * [http://docs.opscode.com/essentials_nodes_chef_run.html](http://docs.opscode.com/essentials_nodes_chef_run.html)
 
           Don't worry about changing your recipe if it already does what you
           want - the amount of Ruby syntactic sugar to apply is very much a
@@ -196,9 +198,9 @@ rules:
       cookbook and not defined as a dependency in your cookbook metadata. This
       is potentially a big problem because things will blow up if the necessary
       dependency cannot be found when Chef tries to converge your node. For more
-      information refer to the Chef wiki metadata page:
+      information refer to the Chef metadata page:
 
-      * [http://wiki.opscode.com/display/chef/Metadata](http://wiki.opscode.com/display/chef/Metadata)
+      * [http://docs.opscode.com/essentials_cookbook_metadata.html](http://docs.opscode.com/essentials_cookbook_metadata.html)
 
       The fix is to declare the cookbook of the recipe you are including as a
       dependency in your `metadata.rb` file.
@@ -230,7 +232,7 @@ rules:
       to set these to real values in `metadata.rb` or run knife again with the
       real values.
 
-      * [http://wiki.opscode.com/display/chef/Managing+Cookbooks+With+Knife#ManagingCookbooksWithKnife-create](http://wiki.opscode.com/display/chef/Managing+Cookbooks+With+Knife#ManagingCookbooksWithKnife-create)
+      * [http://docs.opscode.com/knife_cookbook.html#create](http://docs.opscode.com/knife_cookbook.html#create)
     examples:
       - title: Maintainer metadata is boilerplate default
         code: |
@@ -261,7 +263,7 @@ rules:
         is not recognised. This is commonly a typo or you need to check the
         documentation to see what the attribute you are trying to set is called:
 
-        * [http://wiki.opscode.com/display/chef/Resources](http://wiki.opscode.com/display/chef/Resources)
+          * [http://docs.opscode.com/resource.html#resources](http://docs.opscode.com/resource.html#resources)
     examples:
       - title: Resource with an unrecognised attribute
         text: |
@@ -296,7 +298,7 @@ rules:
       This is commonly because you have made a typo or are not escaping special
       characters in the query syntax.
 
-      * [http://wiki.opscode.com/display/chef/Search#Search-QuerySyntax](http://wiki.opscode.com/display/chef/Search#Search-QuerySyntax)
+      * [http://docs.opscode.com/essentials_search.html#query-syntax](http://docs.opscode.com/essentials_search.html#query-syntax)
 
       Note that this rule will not identify syntax errors in searches composed
       of subexpressions. It checks only for literal search strings.
@@ -352,7 +354,7 @@ rules:
       with a small `/tmp` mount point. Chef has its own configuration option
       `file_cache_path` you should use instead:
 
-      * [http://wiki.opscode.com/display/chef/Chef+Configuration+Settings#ChefConfigurationSettings-filecachepath](http://wiki.opscode.com/display/chef/Chef+Configuration+Settings#ChefConfigurationSettings-filecachepath)
+      * [http://docs.opscode.com/config_rb_client.html](http://docs.opscode.com/config_rb_client.html)
     examples:
       - title: Downloading to a hard-coded temp directory
         text: |
@@ -379,7 +381,7 @@ rules:
       resources are often candidates for extraction to a separate module or
       class under the `libraries` directory.
 
-      * [http://wiki.opscode.com/display/chef/Libraries](http://wiki.opscode.com/display/chef/Libraries)
+      * [http://docs.opscode.com/essentials_cookbook_libraries.html](http://docs.opscode.com/essentials_cookbook_libraries.html)
   - code: FC015
     name: Consider converting definition to a LWRP
     tags:
@@ -392,8 +394,7 @@ rules:
       class resources and cannot receive notifications. You should prefer LWRPs
       for new development.
 
-      * [http://wiki.opscode.com/display/chef/Definitions](http://wiki.opscode.com/display/chef/Definitions)
-      * [http://wiki.opscode.com/display/chef/Lightweight+Resources+and+Providers+(LWRP)](http://wiki.opscode.com/display/chef/Lightweight+Resources+and+Providers+%28LWRP%29)
+      * [http://docs.opscode.com/lwrp_custom_resource.html](http://docs.opscode.com/lwrp_custom_resource.html)
   - code: FC016
     name: LWRP does not declare a default action
     tags:
@@ -405,7 +406,7 @@ rules:
       should normally define a default action on your resource to avoid
       confusing users. Most resources have an intuitive default action.
 
-      * [http://wiki.opscode.com/display/chef/Lightweight+Resources+and+Providers+(LWRP)#LightweightResourcesandProviders%28LWRP%29-DefaultAction](http://wiki.opscode.com/display/chef/Lightweight+Resources+and+Providers+%28LWRP%29#LightweightResourcesandProviders%28LWRP%29-DefaultAction)
+      * [http://docs.opscode.com/lwrp_custom_resource.html#default-action](http://docs.opscode.com/lwrp_custom_resource.html#default-action)
     examples:
       - title: Resource without a default action
         text: |
@@ -581,7 +582,7 @@ rules:
       expected for resources redeclared with the same name. If your LWRP defines
       a resource and that resource:
 
-      * Has an [associated condition](http://wiki.opscode.com/display/chef/Resources#Resources-ConditionalExecution)
+      * Has an [associated guard](http://docs.opscode.com/resource_common.html#guards)
         which references a resource attribute. AND
       * The resource has a fixed name.
 
@@ -623,7 +624,7 @@ rules:
       expected for resources declared within a loop. If your recipe defines a
       resource and that resource:
 
-      * Has an [associated condition](http://wiki.opscode.com/display/chef/Resources#Resources-ConditionalExecution)
+      * Has an [associated condition](http://docs.opscode.com/resource_common.html#guards)
         which references a block variable. AND
       * The resource has a fixed name.
 
@@ -677,7 +678,7 @@ rules:
           a condition, rather than using the built-in Chef `not_if` or `only_if`
           conditional execution attributes.
 
-          * [http://wiki.opscode.com/display/chef/Resources#Resources-ConditionalExecution](http://wiki.opscode.com/display/chef/Resources#Resources-ConditionalExecution)
+          * [http://docs.opscode.com/resource_common.html#guards](http://docs.opscode.com/resource_common.html#guards)
         code: |
           # Don't do this
           if node['foo'] == 'bar'
@@ -904,7 +905,7 @@ rules:
 
       This rule currently only checks for use of `binding.pry` and not the Chef
       built-in `breakpoint` resource which is never used outside of
-      [Shef](http://wiki.opscode.com/display/chef/Shef).
+      [chef-shell](http://docs.opscode.com/chef_shell.html).
     examples:
       - title: Recipe includes breakpoint
         text: |
@@ -931,7 +932,7 @@ rules:
     summary: |
       Chef cookbooks normally include a `metadata.rb` file which can be used
       to express a
-      [wide range of metadata about a cookbook](http://wiki.opscode.com/display/chef/Metadata).
+      [wide range of metadata about a cookbook](http://docs.opscode.com/essentials_cookbook_metadata.html).
       This warning is shown when a directory appears to contain a cookbook, but
       does not include the expected `metadata.rb` file at the top-level.
   - code: FC032
@@ -940,7 +941,7 @@ rules:
       - correctness
       - notifications
     summary: |
-      [Chef notifications](http://wiki.opscode.com/display/chef/Resources#Resources-Notifications)
+      [Chef notifications](http://docs.opscode.com/resource_common.html#notifications)
       allow a resource to define that it should be actioned when another
       resource changes state.
 
@@ -971,7 +972,7 @@ rules:
       - correctness
     summary: |
       This warning is shown when the erb template associated with a
-      [template resource](http://wiki.opscode.com/display/chef/Resources#Resources-Template)
+      [template resource](http://docs.opscode.com/resource_template.html)
       cannot be found.
   - code: FC034
     name: Unused template variables
@@ -979,7 +980,7 @@ rules:
       - correctness
     summary: |
       This warning is shown when one or more variables passed into a template
-      by a [template resource](http://wiki.opscode.com/display/chef/Resources#Resources-Template)
+      by a [template resource](http://docs.opscode.com/resource_template.html)
       are not then used within the template.
 
       This is often a sign that a template still contains hard-coded values that
@@ -1032,7 +1033,7 @@ rules:
       - correctness
     summary: |
       This warning is shown when a resource
-      [notifies](http://wiki.opscode.com/display/chef/Resources#Resources-Notifications)
+      [notifies](http://docs.opscode.com/resource.html#Resources-Notifications)
       another resource to take an action, but the action is invalid for the
       target resource type.
     examples:
