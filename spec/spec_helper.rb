@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'minitest/spec'
+require 'tmpdir'
 
 def api_params(fields)
   h.api_methods.map do |m|

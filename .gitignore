@@ -4,5 +4,5 @@
 .DS_Store
 *.swp
 *.docset
-docset/_output
+docset/build
 source/dash/Foodcritic.tgz
