@@ -50,7 +50,7 @@ rules:
       Where your cookbooks make use of features that only exist in a Chef Server
       based setup you should check whether you are running in solo mode.
 
-      * [http://docs.opscode.com/chef_solo.html](http://docs.opscode.com/chef_solo.html)
+      * [http://docs.chef.io/chef_solo.html](http://docs.chef.io/chef_solo.html)
     examples:
       - title: Does not check for Chef Solo
         text: |
@@ -77,7 +77,7 @@ rules:
       Chef `execute` resource rather than the more idiomatic `service` resource.
       You can read more about the service resource here:
 
-      * [http://docs.opscode.com/resource_service.html](http://docs.opscode.com/resource_service.html)
+      * [http://docs.chef.io/resource_service.html](http://docs.chef.io/resource_service.html)
     examples:
       - title: Uses execute to control a service
         text: |
@@ -136,7 +136,7 @@ rules:
           collection. In the second phase it configures the node against the
           resource collection.
 
-          * [http://docs.opscode.com/essentials_nodes_chef_run.html](http://docs.opscode.com/essentials_nodes_chef_run.html)
+          * [http://docs.chef.io/essentials_nodes_chef_run.html](http://docs.chef.io/essentials_nodes_chef_run.html)
 
           Don't worry about changing your recipe if it already does what you
           want - the amount of Ruby syntactic sugar to apply is very much a
@@ -200,7 +200,7 @@ rules:
       dependency cannot be found when Chef tries to converge your node. For more
       information refer to the Chef metadata page:
 
-      * [http://docs.opscode.com/essentials_cookbook_metadata.html](http://docs.opscode.com/essentials_cookbook_metadata.html)
+      * [http://docs.chef.io/essentials_cookbook_metadata.html](http://docs.chef.io/essentials_cookbook_metadata.html)
 
       The fix is to declare the cookbook of the recipe you are including as a
       dependency in your `metadata.rb` file.
@@ -232,7 +232,7 @@ rules:
       to set these to real values in `metadata.rb` or run knife again with the
       real values.
 
-      * [http://docs.opscode.com/knife_cookbook.html#create](http://docs.opscode.com/knife_cookbook.html#create)
+      * [http://docs.chef.io/knife_cookbook.html#create](http://docs.chef.io/knife_cookbook.html#create)
     examples:
       - title: Maintainer metadata is boilerplate default
         code: |
@@ -263,7 +263,7 @@ rules:
         is not recognised. This is commonly a typo or you need to check the
         documentation to see what the attribute you are trying to set is called:
 
-          * [http://docs.opscode.com/resource.html#resources](http://docs.opscode.com/resource.html#resources)
+          * [http://docs.chef.io/resource.html#resources](http://docs.chef.io/resource.html#resources)
     examples:
       - title: Resource with an unrecognised attribute
         text: |
@@ -298,7 +298,7 @@ rules:
       This is commonly because you have made a typo or are not escaping special
       characters in the query syntax.
 
-      * [http://docs.opscode.com/essentials_search.html#query-syntax](http://docs.opscode.com/essentials_search.html#query-syntax)
+      * [http://docs.chef.io/essentials_search.html#query-syntax](http://docs.chef.io/essentials_search.html#query-syntax)
 
       Note that this rule will not identify syntax errors in searches composed
       of subexpressions. It checks only for literal search strings.
@@ -325,9 +325,9 @@ rules:
       - style
       - readme
     summary: |
-      The [Opscode Community site](http://community.opscode.com/) will now
+      The [Chef Community site](http://supermarket.chef.io/) will now
       render your cookbook README documentation inline - [see this example for
-      the mysql cookbook](http://community.opscode.com/cookbooks/mysql).
+      the mysql cookbook](http://supermarket.chef.io/cookbooks/mysql).
 
       Your README needs to be in
       [Markdown format](http://daringfireball.net/projects/markdown/syntax) for
@@ -354,7 +354,7 @@ rules:
       with a small `/tmp` mount point. Chef has its own configuration option
       `file_cache_path` you should use instead:
 
-      * [http://docs.opscode.com/config_rb_client.html](http://docs.opscode.com/config_rb_client.html)
+      * [http://docs.chef.io/config_rb_client.html](http://docs.chef.io/config_rb_client.html)
     examples:
       - title: Downloading to a hard-coded temp directory
         text: |
@@ -381,7 +381,7 @@ rules:
       resources are often candidates for extraction to a separate module or
       class under the `libraries` directory.
 
-      * [http://docs.opscode.com/essentials_cookbook_libraries.html](http://docs.opscode.com/essentials_cookbook_libraries.html)
+      * [http://docs.chef.io/essentials_cookbook_libraries.html](http://docs.chef.io/essentials_cookbook_libraries.html)
   - code: FC015
     name: Consider converting definition to a LWRP
     tags:
@@ -394,7 +394,7 @@ rules:
       class resources and cannot receive notifications. You should prefer LWRPs
       for new development.
 
-      * [http://docs.opscode.com/lwrp_custom_resource.html](http://docs.opscode.com/lwrp_custom_resource.html)
+      * [http://docs.chef.io/lwrp_custom_resource.html](http://docs.chef.io/lwrp_custom_resource.html)
   - code: FC016
     name: LWRP does not declare a default action
     tags:
@@ -406,7 +406,7 @@ rules:
       should normally define a default action on your resource to avoid
       confusing users. Most resources have an intuitive default action.
 
-      * [http://docs.opscode.com/lwrp_custom_resource.html#default-action](http://docs.opscode.com/lwrp_custom_resource.html#default-action)
+      * [http://docs.chef.io/lwrp_custom_resource.html#default-action](http://docs.chef.io/lwrp_custom_resource.html#default-action)
     examples:
       - title: Resource without a default action
         text: |
@@ -439,7 +439,7 @@ rules:
     applies_to: '>= 0.7.12'
     summary: |
       This warning means that the LWRP will not currently trigger
-      [notifications](http://docs.opscode.com/chef/resources.html#notifications)
+      [notifications](http://docs.chef.io/chef/resources.html#notifications)
       to other resources. This can be a source of difficult to track down bugs.
 
       There are several ways of marking that the resource state has
@@ -453,7 +453,7 @@ rules:
         from Chef 10.14.0.
       * Add `use_inline_resources` to the top of the provider file. This means
         that the resources you define in your action are run in their own
-        [self-contained Chef run](http://docs.opscode.com/lwrp_common_inline_compile.html)
+        [self-contained Chef run](http://docs.chef.io/lwrp_common_inline_compile.html)
         and your provider will send notifications if any of the nested resources
         in your actions are updated. This approach is available from Chef 11 and
         may become the default behaviour in a future version.
@@ -582,13 +582,13 @@ rules:
       expected for resources redeclared with the same name. If your LWRP defines
       a resource and that resource:
 
-      * Has an [associated guard](http://docs.opscode.com/resource_common.html#guards)
+      * Has an [associated guard](http://docs.chef.io/resource_common.html#guards)
         which references a resource attribute. AND
       * The resource has a fixed name.
 
       Then you will likely find that only the first resource will be applied. See this ticket for more background:
 
-      * [http://tickets.opscode.com/browse/CHEF-2812](http://tickets.opscode.com/browse/CHEF-2812)
+      * [http://tickets.chef.io/browse/CHEF-2812](http://tickets.chef.io/browse/CHEF-2812)
     examples:
       - title: Resource condition will be evaluated only once
         text: |
@@ -624,13 +624,13 @@ rules:
       expected for resources declared within a loop. If your recipe defines a
       resource and that resource:
 
-      * Has an [associated condition](http://docs.opscode.com/resource_common.html#guards)
+      * Has an [associated condition](http://docs.chef.io/resource_common.html#guards)
         which references a block variable. AND
       * The resource has a fixed name.
 
       Then you will likely find that only the first resource will be applied. See this ticket for more background:
 
-      * [http://tickets.opscode.com/browse/CHEF-2812](http://tickets.opscode.com/browse/CHEF-2812)
+      * [http://tickets.chef.io/browse/CHEF-2812](http://tickets.chef.io/browse/CHEF-2812)
     examples:
       - title: Resource condition will be evaluated only once
         text: |
@@ -667,7 +667,7 @@ rules:
       brevity.
 
       [Jay Feldblum](https://github.com/yfeldblum) has
-      [expressed criticism](http://community.opscode.com/chat/chef/2012-06-19#id-138584)
+      [expressed criticism](http://supermarket.chef.io/chat/chef/2012-06-19#id-138584)
       of this rule because the effect is that resources are defined
       unnecessarily and ignored only at run-time. His view is that it is cleaner
       to use standard Ruby conditionals to avoid defining them in the first place.
@@ -678,7 +678,7 @@ rules:
           a condition, rather than using the built-in Chef `not_if` or `only_if`
           conditional execution attributes.
 
-          * [http://docs.opscode.com/resource_common.html#guards](http://docs.opscode.com/resource_common.html#guards)
+          * [http://docs.chef.io/resource_common.html#guards](http://docs.chef.io/resource_common.html#guards)
         code: |
           # Don't do this
           if node['foo'] == 'bar'
@@ -710,7 +710,7 @@ rules:
         same family
 
       If you are using
-      [Ohai 0.6.12](http://www.opscode.com/blog/2012/03/22/ohai-0-6-12-released/)
+      [Ohai 0.6.12](http://www.chef.io/blog/2012/03/22/ohai-0-6-12-released/)
       or greater you should probably use `platform_family` instead. Otherwise
       for the greatest portability consider adding the missing platforms to
       your conditional.
@@ -758,7 +758,7 @@ rules:
       This warning is shown if:
       * you have a cookbook that installs a Rubygem for use from Chef
       * the cookbook uses the
-        [compile-time gem install trick](http://www.opscode.com/blog/2009/06/01/cool-chef-tricks-install-and-use-rubygems-in-a-chef-run/)
+        [compile-time gem install trick](http://www.chef.io/blog/2009/06/01/cool-chef-tricks-install-and-use-rubygems-in-a-chef-run/)
         which is deprecated from Chef 0.10.10 and is replaced by the first class
         `chef_gem` resource.
     examples:
@@ -905,7 +905,7 @@ rules:
 
       This rule currently only checks for use of `binding.pry` and not the Chef
       built-in `breakpoint` resource which is never used outside of
-      [chef-shell](http://docs.opscode.com/chef_shell.html).
+      [chef-shell](http://docs.chef.io/chef_shell.html).
     examples:
       - title: Recipe includes breakpoint
         text: |
@@ -932,7 +932,7 @@ rules:
     summary: |
       Chef cookbooks normally include a `metadata.rb` file which can be used
       to express a
-      [wide range of metadata about a cookbook](http://docs.opscode.com/essentials_cookbook_metadata.html).
+      [wide range of metadata about a cookbook](http://docs.chef.io/essentials_cookbook_metadata.html).
       This warning is shown when a directory appears to contain a cookbook, but
       does not include the expected `metadata.rb` file at the top-level.
   - code: FC032
@@ -941,7 +941,7 @@ rules:
       - correctness
       - notifications
     summary: |
-      [Chef notifications](http://docs.opscode.com/resource_common.html#notifications)
+      [Chef notifications](http://docs.chef.io/resource_common.html#notifications)
       allow a resource to define that it should be actioned when another
       resource changes state.
 
@@ -972,7 +972,7 @@ rules:
       - correctness
     summary: |
       This warning is shown when the erb template associated with a
-      [template resource](http://docs.opscode.com/resource_template.html)
+      [template resource](http://docs.chef.io/resource_template.html)
       cannot be found.
   - code: FC034
     name: Unused template variables
@@ -980,7 +980,7 @@ rules:
       - correctness
     summary: |
       This warning is shown when one or more variables passed into a template
-      by a [template resource](http://docs.opscode.com/resource_template.html)
+      by a [template resource](http://docs.chef.io/resource_template.html)
       are not then used within the template.
 
       This is often a sign that a template still contains hard-coded values that
@@ -1033,7 +1033,7 @@ rules:
       - correctness
     summary: |
       This warning is shown when a resource
-      [notifies](http://docs.opscode.com/resource.html#Resources-Notifications)
+      [notifies](http://docs.chef.io/resource.html#Resources-Notifications)
       another resource to take an action, but the action is invalid for the
       target resource type.
     examples:
@@ -1277,7 +1277,7 @@ rules:
     summary: |
       From Chef 11 it is no longer possible to set attributes without specifying
       their precedence level. For more information refer to the list of
-      [Breaking Changes in Chef 11](http://docs.opscode.com/breaking_changes_chef_11.html#implicit-writes-removed).
+      [Breaking Changes in Chef 11](http://docs.chef.io/breaking_changes_chef_11.html#implicit-writes-removed).
     examples:
       - title: Assign an attribute value without specifying precedence
         text: |
@@ -1311,7 +1311,7 @@ rules:
       [Jesse Storimer's Working with Unix Processes](http://www.jstorimer.com/products/working-with-unix-processes).
 
       Chef comes with a library called
-      [Mixlib::ShellOut](https://github.com/opscode/mixlib-shellout) that
+      [Mixlib::ShellOut](https://github.com/chef/mixlib-shellout) that
       provides a more convenient interface and it is idiomatic to use it rather
       than the backtick `` ` `` or `%x{}` syntaxes.
     examples:
@@ -1337,7 +1337,7 @@ rules:
       - roles
     summary: |
       This warning is shown if you declare a `name` in a
-      [role file](http://docs.opscode.com/essentials_roles.html#ruby-dsl)
+      [role file](http://docs.chef.io/essentials_roles.html#ruby-dsl)
       that does not match the containing file name. Using the same name for both
       is more consistent.
   - code: FC050
@@ -1347,8 +1347,8 @@ rules:
       - environments
       - roles
     summary: |
-      This warning is shown if the name declared in a [role](http://docs.opscode.com/essentials_roles.html#ruby-dsl)
-      or [environment](http://docs.opscode.com/essentials_environments.html#ruby-dsl)
+      This warning is shown if the name declared in a [role](http://docs.chef.io/essentials_roles.html#ruby-dsl)
+      or [environment](http://docs.chef.io/essentials_environments.html#ruby-dsl)
       file contains characters that are not allowed.
 
       "[Names should be] made up of letters (upper-and lower-case), numbers, underscores, and hyphens:
