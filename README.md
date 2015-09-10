@@ -2,7 +2,7 @@
 
 This is the website for foodcritic, a lint tool for Chef cookbooks.
 
-It uses [Middleman](http://middlemanapp.com/). You can visit the published website at: [http://foodcritic.io](http://foodcritic.io)
+It uses [Middleman](https://middlemanapp.com/). You can visit the published website at: [http://foodcritic.io](http://foodcritic.io)
 
 # Building
 
@@ -16,9 +16,9 @@ It uses [Middleman](http://middlemanapp.com/). You can visit the published websi
     $ bundle exec rake deploy
 
 # Continuous Integration
-[Travis CI](http://travis-ci.org/acrmp/foodcritic-site)
+[Travis CI](https://travis-ci.org/acrmp/foodcritic-site)
 
-![Built on Travis](https://secure.travis-ci.org/acrmp/foodcritic-site.png?branch=master)
+![Built on Travis](https://travis-ci.org/acrmp/foodcritic-site.svg?branch=master)
 
 # License
 MIT - see the accompanying [LICENSE](https://github.com/acrmp/foodcritic-site/blob/master/LICENSE) file for details.
