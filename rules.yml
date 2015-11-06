@@ -6,11 +6,24 @@ rules:
       - style
       - attributes
     applies_to: '>= 0.7.12'
-    deprecated: true
     summary: |
-      This rule has been deprecated. See the discussion against
-      [issue #86](https://github.com/acrmp/foodcritic/issues/86) for more
-      detail.
+      Use strings rather than symbols when referencing node attributes. This
+      warning will be shown if you reference a node attribute using symbols.
+    examples:
+      - title: Symbols in node attributes.
+        text: This example would match the FC001 because node[:cookbook][:package] accesses node attributes with symbols
+        code: |
+          # Don't do this
+          package node[:cookbook][:package] do
+            action :install
+          end
+      - title: Modified version
+        text: 'This modified example would not match the FC002 rule:'
+        code: |
+          package node['cookbook']['package'] do
+            action :install
+          end
+
   - code: FC002
     name: Avoid string interpolation where not required
     tags:
