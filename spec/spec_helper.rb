@@ -12,7 +12,7 @@ def api_params(fields)
 end
 
 def helper_with_api_method(options={})
-  Object.extend(ApiHelper).tap do |h|
+  Object.extend(ApiHelper).clone.tap do |h|
     h.instance_eval do
       @options = options
       def load_api_methods
