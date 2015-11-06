@@ -26,14 +26,14 @@ rules:
         text: This example would match the FC002 rule because the `version` attribute has been unnecessarily quoted.
         code: |
           # Don't do this
-          package "mysql-server" do
+          package 'mysql-server' do
             version "#{node['mysql']['version']}"
             action :install
           end
       - title: Modified version
         text: 'This modified example would not match the FC002 rule:'
         code: |
-          package "mysql-server" do
+          package 'mysql-server' do
             version node['mysql']['version']
             action :install
           end
@@ -87,14 +87,14 @@ rules:
           control over the command issued.
         code: |
           # Don't do this
-          execute "start-tomcat" do
-            command "/etc/init.d/tomcat6 start"
+          execute 'start-tomcat' do
+            command '/etc/init.d/tomcat6 start'
             action :run
           end
       - title: Modified version
         text: 'This modified example would not match the FC004 rule:'
         code: |
-          service "tomcat" do
+          service 'tomcat' do
             action :start
           end
   - code: FC005
@@ -116,16 +116,16 @@ rules:
           of the packages specified the version then this rule would not match.
         code: |
           # You could do this
-          package "erlang-base" do
+          package 'erlang-base' do
             action :upgrade
           end
-          package "erlang-corba" do
+          package 'erlang-corba' do
             action :upgrade
           end
-          package "erlang-crypto" do
+          package 'erlang-crypto' do
             action :upgrade
           end
-          package "rabbitmq-server" do
+          package 'rabbitmq-server' do
             action :upgrade
           end
       - title: Modified version
@@ -164,9 +164,9 @@ rules:
       - title: File mode won't be interpreted correctly
         code: |
           # Don't do this
-          directory "/var/lib/foo" do
-            owner "root"
-            group "root"
+          directory '/var/lib/foo' do
+            owner 'root'
+            group 'root'
             mode 644
             action :create
           end
@@ -174,17 +174,17 @@ rules:
         text: 'These modified examples would not match the FC006 rule:'
         code: |
           # This is ok
-          directory "/var/lib/foo" do
-            owner "root"
-            group "root"
-            mode "644"
+          directory '/var/lib/foo' do
+            owner 'root'
+            group 'root'
+            mode '644'
             action :create
           end
 
           # And so is this
-          directory "/var/lib/foo" do
-            owner "root"
-            group "root"
+          directory '/var/lib/foo' do
+            owner 'root'
+            group 'root'
             mode 00644
             action :create
           end
@@ -213,14 +213,14 @@ rules:
         text: |
           Assuming you have a recipe that had the following line:
         code: |
-          include_recipe "apache2::default"
+          include_recipe 'apache2::default'
       - title: Adding metadata dependency for Chef
         text: |
           Then to remove this warning you would add the `apache2` cookbook as a
           dependency to your own cookbook metadata in the `metadata.rb` file at
           the root of your cookbook.
         code: |
-          depends "apache2"
+          depends 'apache2'
   - code: FC008
     name: Generated cookbook metadata needs updating
     tags:
@@ -237,21 +237,21 @@ rules:
       - title: Maintainer metadata is boilerplate default
         code: |
           # Don't do this
-          maintainer "YOUR_COMPANY_NAME"
-          maintainer_email "YOUR_EMAIL"
-          license "All rights reserved"
-          description "Installs/Configures example"
+          maintainer 'YOUR_COMPANY_NAME'
+          maintainer_email 'YOUR_EMAIL'
+          license 'All rights reserved'
+          description 'Installs/Configures example'
           long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-          version "0.0.1"
+          version '0.0.1'
       - title: Modified version
         text: 'This modified example would not match the FC008 rule:'
         code: |
-          maintainer "Example Ltd"
-          maintainer_email "postmaster@example.com"
-          license "All rights reserved"
-          description "Installs/Configures example"
+          maintainer 'Example Ltd'
+          maintainer_email 'postmaster@example.com'
+          license 'All rights reserved'
+          description 'Installs/Configures example'
           long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-          version "0.0.1"
+          version '0.0.1'
   - code: FC009
     name: Resource attribute not recognised
     tags:
@@ -271,10 +271,10 @@ rules:
           recognised attribute for the file resource.
         code: |
           # Don't do this
-          file "/tmp/something" do
-            punter "root"
-            group "root"
-            mode "0755"
+          file '/tmp/something' do
+            punter 'root'
+            group 'root'
+            mode '0755'
             action :create
           end
       - title: Modified version
@@ -282,10 +282,10 @@ rules:
           Checking the documentation we can see the correct attribute is
           `owner`.
         code: |
-          file "/tmp/something" do
-            owner "root"
-            group "root"
-            mode "0755"
+          file '/tmp/something' do
+            owner 'root'
+            group 'root'
+            mode '0755'
             action :create
           end
   - code: FC010
@@ -362,14 +362,14 @@ rules:
           path to `/tmp`.
         code: |
           # Don't do this
-          remote_file "/tmp/large-file.tar.gz" do
-            source "http://www.example.org/large-file.tar.gz"
+          remote_file '/tmp/large-file.tar.gz' do
+            source 'http://www.example.org/large-file.tar.gz'
           end
       - title: Modified version
         text: 'To remove this warning use the configured `file_cache_path`:'
         code: |
           remote_file "#{Chef::Config[:file_cache_path]}/large-file.tar.gz" do
-            source "http://www.example.org/large-file.tar.gz"
+            source 'http://www.example.org/large-file.tar.gz'
           end
   - code: FC014
     name: Consider extracting long ruby_block to library
@@ -598,7 +598,7 @@ rules:
         code: |
           # Don't do this
           action :feed do
-            execute "feed_pet" do
+            execute 'feed_pet' do
               command "echo 'Feeding: #{new_resource.name}'; touch '/tmp/#{new_resource.name}'"
               not_if { ::File.exists?("/tmp/#{new_resource.name}")}
             end
@@ -640,7 +640,7 @@ rules:
         code: |
           # Don't do this
           %w{rover fido}.each do |pet_name|
-            execute "feed_pet" do
+            execute 'feed_pet' do
               command "echo 'Feeding: #{pet_name}'; touch '/tmp/#{pet_name}'"
               not_if { ::File.exists?("/tmp/#{pet_name}")}
             end
@@ -682,7 +682,7 @@ rules:
         code: |
           # Don't do this
           if node['foo'] == 'bar'
-            service "apache" do
+            service 'apache' do
               action :enable
             end
           end
@@ -691,7 +691,7 @@ rules:
           You can avoid the warning above with more idiomatic Chef that
           specifies the condition above as an attribute on the resource:
         code: |
-          service "apache" do
+          service 'apache' do
             action :enable
             only_if { node['foo'] == 'bar' }
           end
@@ -724,12 +724,12 @@ rules:
           # The RHEL platforms branch below omits popular distributions
           # including Amazon Linux.
           case node[:platform]
-            when "debian", "ubuntu"
-              package "foo" do
+            when 'debian', 'ubuntu'
+              package 'foo' do
                 action :install
               end
-            when "centos", "redhat"
-              package "bar" do
+            when 'centos', 'redhat'
+              package 'bar' do
                 action :install
               end
           end
@@ -739,12 +739,12 @@ rules:
           RHEL-based distributions have been added to the `when`.
         code: |
           case node[:platform]
-            when "debian", "ubuntu"
-              package "foo" do
+            when 'debian', 'ubuntu'
+              package 'foo' do
                 action :install
               end
-            when "centos", "redhat", "amazon", "scientific"
-              package "bar" do
+            when 'centos', 'redhat', 'amazon', 'scientific', 'oracle'
+              package 'bar' do
                 action :install
               end
             end
@@ -768,7 +768,7 @@ rules:
           approach for installing a gem so that it is available in the current
           run.
         code: |
-          r = gem_package "mysql" do
+          r = gem_package 'mysql' do
             action :nothing
           end
 
@@ -778,7 +778,7 @@ rules:
         text: |
           Use `chef_gem` to install the gem to avoid this warning.
         code: |
-          chef_gem "mysql"
+          chef_gem 'mysql'
   - code: FC026
     name: Conditional execution block attribute contains only string
     tags:
@@ -796,20 +796,20 @@ rules:
           your condition.
         code: |
           # Don't do this
-          template "/etc/foo" do
-            mode "0644"
-            source "foo.erb"
-            not_if { "test -f /etc/foo" }
+          template '/etc/foo' do
+            mode '0644'
+            source 'foo.erb'
+            not_if { 'test -f /etc/foo' }
           end
       - title: Modified version
         text: |
           If the intention is to run the string as an operating system command
           then remove the block surrounding the command.
         code: |
-          template "/etc/foo" do
-            mode "0644"
-            source "foo.erb"
-            not_if "test -f /etc/foo"
+          template '/etc/foo' do
+            mode '0644'
+            source 'foo.erb'
+            not_if 'test -f /etc/foo'
           end
   - code: FC027
     name: Resource sets internal attribute
@@ -828,7 +828,7 @@ rules:
           set by the provider itself and not in normal recipe usage.
         code: |
           # Don't do this
-          service "foo" do
+          service 'foo' do
             running true
           end
       - title: Modified version
@@ -836,7 +836,7 @@ rules:
           In this particular example you can achieve the same effect by using
           the service `:start` action.
         code: |
-          service "foo" do
+          service 'foo' do
             action :start
           end
   - code: FC028
@@ -856,16 +856,16 @@ rules:
           is incorrectly prefixed with `node`.
         code: |
           # Don't do this
-          file "/etc/foo" do
-            only_if { node.platform?("commodore64") }
+          file '/etc/foo' do
+            only_if { node.platform?('commodore64') }
           end
       - title: Modified version
         text: |
           Remove the leading `node.` from the use of `platform?` to resolve
           this warning.
         code: |
-          file "/etc/foo" do
-            only_if { platform?("commodore64") }
+          file '/etc/foo' do
+            only_if { platform?('commodore64') }
           end
   - code: FC029
     name: No leading cookbook name in recipe metadata
@@ -882,16 +882,16 @@ rules:
           recipe without prefixing it with the name of the current cookbook.
         code: |
           # Don't do this
-          name "example"
-          version "1.2.3"
-          recipe "default", "Installs Example"
+          name 'example'
+          version '1.2.3'
+          recipe 'default', 'Installs Example'
       - title: Modified version
         text: |
           This modified example would not match the FC029 rule:
         code: |
-          name "example"
-          version "1.2.3"
-          recipe "example::default", "Installs Example"
+          name 'example'
+          version '1.2.3'
+          recipe 'example::default', 'Installs Example'
   - code: FC030
     name: Cookbook contains debugger breakpoints
     tags:
@@ -913,16 +913,16 @@ rules:
           breakpoint declared with `binding.pry`.
         code: |
           # Don't do this
-          template "/etc/foo" do
-            source "foo.erb"
+          template '/etc/foo' do
+            source 'foo.erb'
           end
           binding.pry
       - title: Modified version
         text: |
           This modified example would not match the FC030 rule:
         code: |
-          template "/etc/foo" do
-            source "foo.erb"
+          template '/etc/foo' do
+            source 'foo.erb'
           end
   - code: FC031
     name: Cookbook without metadata file
@@ -955,16 +955,16 @@ rules:
           notification timing.
         code: |
           # Don't do this
-          template "/etc/foo" do
-            notifies :restart, "service[foo]", :imediately
+          template '/etc/foo' do
+            notifies :restart, 'service[foo]', :imediately
           end
       - title: Modified version
         text: |
           This modified example would not match the FC032 rule because the
           mispelt timing has been corrected.
         code: |
-          template "/etc/foo" do
-            notifies :restart, "service[foo]", :immediately
+          template '/etc/foo' do
+            notifies :restart, 'service[foo]', :immediately
           end
   - code: FC033
     name: Missing template
@@ -991,8 +991,8 @@ rules:
           This example matches the FC034 rule because it passes two variables
           to the template, of which only the first is used.
         code: |
-          template "/etc/foo/config.conf" do
-            source "config.conf.erb"
+          template '/etc/foo/config.conf' do
+            source 'config.conf.erb'
             variables(
               'config_var_a' => node['config']['config_var_a'],
               'config_var_b' => node['config']['config_var_b']
@@ -1007,8 +1007,8 @@ rules:
           This modified example would not match the FC034 rule becuse the
           template has been updated to include both variables passed through.
         code: |
-          template "/etc/foo/config.conf" do
-            source "config.conf.erb"
+          template '/etc/foo/config.conf' do
+            source 'config.conf.erb'
             variables(
               'config_var_a' => node['config']['config_var_a'],
               'config_var_b' => node['config']['config_var_b']
@@ -1043,16 +1043,16 @@ rules:
           not a valid action for services.
         code: |
           # Don't do this
-          template "/etc/foo.conf" do
-            notifies :activate_turbo_boost, "service[foo]"
+          template '/etc/foo.conf' do
+            notifies :activate_turbo_boost, 'service[foo]'
           end
       - title: Modified version
         text: |
           This modified example would not match the FC037 rule because the
           action has been corrected.
         code: |
-          template "/etc/foo.conf" do
-            notifies :restart, "service[foo]"
+          template '/etc/foo.conf' do
+            notifies :restart, 'service[foo]'
           end
   - code: FC038
     name: Invalid resource action
@@ -1068,7 +1068,7 @@ rules:
           not a valid action.
         code: |
           # Don't do this
-          service "foo" do
+          service 'foo' do
             action :none
           end
       - title: Modified version
@@ -1076,7 +1076,7 @@ rules:
           This modified example would not match the FC038 rule because the
           action has been corrected.
         code: |
-          service "foo" do
+          service 'foo' do
             action :nothing
           end
   - code: FC039
@@ -1118,7 +1118,7 @@ rules:
           This example matches the FC040 rule because an `execute` resource is
           used where you could instead use a `git` resource.
         code: |
-          execute "git clone https://github.com/git/git.git" do
+          execute 'git clone https://github.com/git/git.git' do
             action :run
           end
       - title: Modified version
@@ -1126,9 +1126,9 @@ rules:
           This modified example would not match the FC040 rule because the
           `execute` resource has been replaced by a `git` resource.
         code: |
-          git "/foo/bar" do
-            repository "git://github.com/git/git.git"
-            reference "master"
+          git '/foo/bar' do
+            repository 'git://github.com/git/git.git'
+            reference 'master'
             action :sync
           end
   - code: FC041
@@ -1155,8 +1155,8 @@ rules:
           This modified example would not match the FC041 rule because the
           `execute` resource has been replaced by a `remote_file` resource.
         code: |
-          remote_file "/tmp/testfile" do
-            source "http://www.example.org/"
+          remote_file '/tmp/testfile' do
+            source 'http://www.example.org/'
           end
   - code: FC042
     name: Prefer include_recipe to require_recipe
@@ -1173,13 +1173,13 @@ rules:
           `require_recipe` statement is used.
         code: |
           # Don't do this
-          require_recipe "apache2::default"
+          require_recipe 'apache2::default'
       - title: Modified version
         text: |
           This modified example would not match the FC042 rule because the
           `require_recipe` statement has been replaced with `include_recipe`.
         code: |
-          include_recipe "apache2::default"
+          include_recipe 'apache2::default'
   - code: FC043
     name: Prefer new notification syntax
     tags:
@@ -1196,16 +1196,16 @@ rules:
           This example matches the FC043 rule because it uses the older
           notification syntax.
         code: |
-          template "/etc/www/configures-apache.conf" do
-            notifies :restart, resources(:service => "apache")
+          template '/etc/www/configures-apache.conf' do
+            notifies :restart, resources(:service => 'apache')
           end
       - title: Modified version
         text: |
           This modified example would not match the FC043 rule because the
           syntax of the notification has been updated to use the new format.
         code: |
-          template "/etc/www/configures-apache.conf" do
-            notifies :restart, "service[apache]"
+          template '/etc/www/configures-apache.conf' do
+            notifies :restart, 'service[apache]'
           end
   - code: FC044
     name: Avoid bare attribute keys
@@ -1359,15 +1359,15 @@ rules:
           This example matches the FC050 rule because the name includes a space character.
         code: |
           # Don't do this
-          name "web server"
-          run_list "recipe[apache2]"
+          name 'web server'
+          run_list 'recipe[apache2]'
       - title: Modified version
         text: |
           This modified example would not match the FC050 rule because the space
           has been removed from the role name.
         code: |
-          name "webserver"
-          run_list "recipe[apache2]"
+          name 'webserver'
+          run_list 'recipe[apache2]'
   - code: FC051
     name: Template partials loop indefinitely
     tags:
