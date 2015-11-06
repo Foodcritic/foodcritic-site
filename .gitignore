@@ -6,3 +6,4 @@
 *.docset
 docset/build
 source/dash/Foodcritic.tgz
+.project

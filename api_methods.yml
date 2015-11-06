@@ -336,7 +336,7 @@ api_methods:
           True if this string might be an OS command
   - name: read_ast
     description: |
-      Read the AST for the given Ruby or Erb source file.
+      Read the AST for the given Ruby or erb source file.
 
       Many of the other functions documented here take an `ast` as an argument.
       You can also use Nokogiri's support querying the AST with XPath or CSS
