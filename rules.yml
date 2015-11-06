@@ -383,18 +383,18 @@ rules:
 
       * [https://docs.chef.io/essentials_cookbook_libraries.html](https://docs.chef.io/essentials_cookbook_libraries.html)
   - code: FC015
-    name: Consider converting definition to a LWRP
+    name: Consider converting definition to a Custom Resource
     tags:
       - style
       - definitions
       - lwrp
     summary: |
       Chef definitions are an older approach to creating a higher-level
-      abstraction for a group of resources. Unlike LWRPs they are not first
-      class resources and cannot receive notifications. You should prefer LWRPs
-      for new development.
+      abstraction for a group of resources. Unlike Custom Resources they are not
+      first class resources, cannot receive notifications, and do not support why-run
+      mode. You should prefer Custom Resources for new development.
 
-      * [https://docs.chef.io/lwrp_custom_resource.html](https://docs.chef.io/lwrp_custom_resource.html)
+      * [https://docs.chef.io/custom_resources.html](https://docs.chef.io/custom_resources.html)
   - code: FC016
     name: LWRP does not declare a default action
     tags:
@@ -925,7 +925,7 @@ rules:
             source "foo.erb"
           end
   - code: FC031
-    name: Cookbook without metadata file
+    name: Cookbook without metadata.rb file
     tags:
       - correctness
       - metadata
@@ -1232,15 +1232,17 @@ rules:
         code: |
           default['myhostname'] = node['hostname']
   - code: FC045
-    name: Consider setting cookbook name in metadata
+    name: Metadata does not contain cookbook name
     tags:
-      - annoyances
+      - correctness
       - metadata
+      - chef12
     summary: |
       This warning is shown when your cookbook does not define a name within
       the cookbook `metadata.rb` file. It's a good idea to specify a name in
       your cookbook metadata to avoid breakage if the name of the containing
-      directory changes.
+      directory changes. Additionally, Chef 12 requires the name to be included
+      in the metadata.rb file
   - code: FC046
     name: Attribute assignment uses assign unless nil
     tags:
@@ -1274,6 +1276,7 @@ rules:
     tags:
       - attributes
       - correctness
+      - chef11
     summary: |
       From Chef 11 it is no longer possible to set attributes without specifying
       their precedence level. For more information refer to the list of
