@@ -44,7 +44,7 @@ api_methods:
   - name: checks_for_chef_solo?
     description: |
       Does the specified recipe check for
-      [Chef Solo](http://docs.chef.io/chef_solo.html)?
+      [Chef Solo](https://docs.chef.io/chef_solo.html)?
 
       You can use this to check for the portability of the recipe between
       Chef Server and Chef Solo.
