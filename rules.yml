@@ -1392,3 +1392,24 @@ rules:
       This warning is shown if a template uses template partials in a way that
       would cause an infinite loop. For example if two template partials both
       include each other.
+  - code: FC052
+    name: Metadata uses the unimplemented "suggests" keyword
+    tags:
+      - style
+      - metadata
+    summary: |
+      This warning is shown if metadata.rb includes the suggests metadata. Suggests
+      metadata was often used to inform users that a cookbook was required for
+      a particular use case, but suggests itself was never implemented in chef-client.
+      Adding suggests has no impact on the chef-client run and should be avoided.
+  - code: FC053
+    name: Metadata uses the unimplemented "recommends" keyword
+    tags:
+      - style
+      - metadata
+    summary: |
+      This warning is shown if metadata.rb includes the recommends metadata.
+      Recommends metadata was often used to inform users that a cookbook was
+      recommended for a particular use case, but recommends itself was never
+      implemented in chef-client. Adding recommends has no impact on the
+      chef-client run and should be avoided.
