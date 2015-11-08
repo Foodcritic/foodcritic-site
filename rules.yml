@@ -18,7 +18,7 @@ rules:
             action :install
           end
       - title: Modified version
-        text: 'This modified example would not match the FC002 rule:'
+        text: 'This modified example would not match the FC001 rule:'
         code: |
           package node['cookbook']['package'] do
             action :install
