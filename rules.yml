@@ -11,7 +11,7 @@ rules:
       warning will be shown if you reference a node attribute using symbols.
     examples:
       - title: Symbols in node attributes.
-        text: This example would match the FC001 because node[:cookbook][:package] accesses node attributes with symbols
+        text: This example would match the FC001 rule because node[:cookbook][:package] accesses node attributes with symbols
         code: |
           # Don't do this
           package node[:cookbook][:package] do
