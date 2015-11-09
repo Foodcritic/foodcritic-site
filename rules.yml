@@ -211,7 +211,7 @@ rules:
       dependency cannot be found when Chef tries to converge your node. For more
       information refer to the Chef metadata page:
 
-      * [https://docs.chef.io/essentials_cookbook_metadata.html](https://docs.chef.io/essentials_cookbook_metadata.html)
+      * [https://docs.chef.io/config_rb_metadata.html](https://docs.chef.io/config_rb_metadata.html)
 
       The fix is to declare the cookbook of the recipe you are including as a
       dependency in your `metadata.rb` file.
@@ -309,7 +309,7 @@ rules:
       This is commonly because you have made a typo or are not escaping special
       characters in the query syntax.
 
-      * [https://docs.chef.io/essentials_search.html#query-syntax](https://docs.chef.io/essentials_search.html#query-syntax)
+      * [https://docs.chef.io/chef_search.html#query-syntax](https://docs.chef.io/chef_search.html#query-syntax)
 
       Note that this rule will not identify syntax errors in searches composed
       of subexpressions. It checks only for literal search strings.
@@ -336,7 +336,7 @@ rules:
       - style
       - readme
     summary: |
-      The [Chef Community site](https://supermarket.chef.io/) will now
+      [Supermarket](https://supermarket.chef.io/) will now
       render your cookbook README documentation inline - [see this example for
       the mysql cookbook](https://supermarket.chef.io/cookbooks/mysql).
 
@@ -392,7 +392,7 @@ rules:
       resources are often candidates for extraction to a separate module or
       class under the `libraries` directory.
 
-      * [https://docs.chef.io/essentials_cookbook_libraries.html](https://docs.chef.io/essentials_cookbook_libraries.html)
+      * [https://docs.chef.io/libraries.html](https://docs.chef.io/libraries.html)
   - code: FC015
     name: Consider converting definition to a Custom Resource
     tags:
@@ -908,7 +908,7 @@ rules:
     tags:
       - annoyances
     summary: |
-      [Pry is a fantastic tool](http://pry.github.com/) for interactive
+      [Pry is a fantastic tool](http://pryrepl.org/) for interactive
       exploration of a running Ruby program. You can place breakpoints in your
       cookbook code that will launch a Pry console. This warning is shown when
       your cookbook code contains these breakpoints, as failing to remove these
@@ -943,7 +943,7 @@ rules:
     summary: |
       Chef cookbooks normally include a `metadata.rb` file which can be used
       to express a
-      [wide range of metadata about a cookbook](https://docs.chef.io/essentials_cookbook_metadata.html).
+      [wide range of metadata about a cookbook](https://docs.chef.io/config_rb_metadata.html).
       This warning is shown when a directory appears to contain a cookbook, but
       does not include the expected `metadata.rb` file at the top-level.
   - code: FC032
