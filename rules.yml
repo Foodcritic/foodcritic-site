@@ -149,8 +149,6 @@ rules:
           collection. In the second phase it configures the node against the
           resource collection.
 
-          * [https://docs.chef.io/essentials_nodes_chef_run.html](https://docs.chef.io/essentials_nodes_chef_run.html)
-
           Don't worry about changing your recipe if it already does what you
           want - the amount of Ruby syntactic sugar to apply is very much a
           matter of personal taste. Note that this rule also isn't clever enough
