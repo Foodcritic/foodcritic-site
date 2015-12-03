@@ -1411,3 +1411,83 @@ rules:
       recommended for a particular use case, but recommends itself was never
       implemented in chef-client. Adding recommends has no impact on the
       chef-client run and should be avoided.
+  - code: FC055
+    name: Ensure maintainer is set in metadata
+    tags:
+      - correctness
+      - metadata
+    summary: |
+      This warning is shown if the metadata does not include the maintainer
+      keyword. Cookbooks should always contain maintainer information so users
+      can determine the maintainer of the cookbook.
+  - code: FC056
+    name: Ensure maintainer_email is set in metadata
+    tags:
+      - correctness
+      - metadata
+    summary: |
+      This warning is shown if the metadata does not include the maintainer_email
+      keyword. Cookbooks should always contain maintainer_email so users can
+      contact the maintainer.
+  - code: FC057
+    name: Library provider does not declare use_inline_resources
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a library provider does not specify
+      use_inline_resources. use_inline_resources executes provider resources in
+      their own run context, outside the normal recipe run context. Doing so is
+      considered best practice as it avoids issues with notifying when the
+      provider resource is updated, and also avoids the need to uniquely name
+      resources in the provider.
+  - code: FC058
+    name: Library provider declares use_inline_resources and declares \#action_<name> methods
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a library provider includes use_inline_resources,
+      but declares it's actions using action_<name> methods. The implemention of
+      use_inline_resources requires that actions be declared using the action
+      DSL method and not declared as normal ruby methods. Declaring actions as
+      normal methods will break use_inline_resources. It also may produce
+      unexpected behavior in some versions of Chef.
+  - code: FC059
+    name: LWRP provider does not declare use_inline_resources
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a LWRP provider does not specify
+      use_inline_resources. use_inline_resources executes provider resources in
+      their own run context, outside the normal recipe run context. Doing so is
+      considered best practice as it avoids issues with notifying when the
+      provider resource is updated, and also avoids the need to uniquely name
+      resources in the provider.
+  - code: FC060
+    name: LWRP provider declares use_inline_resources and declares \#action_<name> methods
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a LWRP provider includes use_inline_resources,
+      but declares it's actions using action_<name> methods. The implemention of
+      use_inline_resources requires that actions be declared using the action
+      DSL method and not declared as normal ruby methods. Declaring actions as
+      normal methods will break use_inline_resources. It also may produce
+      unexpected behavior in some versions of Chef.
+  - code: FC061
+    name: Valid cookbook versions are of the form x.y or x.y.z
+    tags:
+      - correctness
+      - metadata
+    summary: |
+      This warning is shown if a cookbook includes an invalid version string in
+      the metadata file. Cookbooks that do not follow this format cannot be
+      uploaded to the chef server.
+  - code: FC062
+    name: Cookbook should have version metadata
+    tags:
+      - metadata
+    summary: |
+      This warning is shown if a cookbook does not contain a version string in
+      the metadata file. Without a version string cookbooks will be uploaded as
+      version 0.0.0 each time. It is best practice to provide accurate versions
+      that are incremented on each release, which requires specifying the string.
