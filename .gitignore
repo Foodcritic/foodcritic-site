@@ -7,3 +7,7 @@
 docset/build
 source/dash/Foodcritic.tgz
 .project
+Gemfile.lock
+/.bundle/
+.rvmrc
+.idea
