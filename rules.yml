@@ -220,7 +220,7 @@ rules:
       name of your cookbook correctly when the cookbook directory does not match
       the name of the cookbook specified in the include.
     examples:
-      - title: Example depency on another cookbook
+      - title: Example dependency on another cookbook
         text: |
           Assuming you have a recipe that had the following line:
         code: |
