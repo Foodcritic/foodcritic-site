@@ -1503,7 +1503,9 @@ rules:
   - code: FC064
     name: Ensure issues_url is set in metadata
     tags:
-      - metadata supermarket
+      - metadata
+      - supermarket
+    applies_to: '>= 12.0.0'
     summary: |
       This warning is shown if a cookbook does not include the source_url property in
       its metadata file.  source_url is used to point to the source location for the
@@ -1517,7 +1519,9 @@ rules:
   - code: FC065
     name: Ensure source_url is set in metadata
     tags:
-      - metadata supermarket
+      - metadata
+      - supermarket
+    applies_to: '>= 12.0.0'
     summary: |
       This warning is shown if a cookbook does not include the issues_url property in
       its metadata file.  issues_url is used to point to the location for submitting issues
