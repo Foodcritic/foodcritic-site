@@ -25,6 +25,15 @@
   <code>~</code> (tilde) modifier at the command line.
 </p>
 <code>$ foodcritic -t ~FC002</code>
+<p>
+  You may also ignore rules in source code using a comment with the same
+  tilde modifier and rule code syntax as in the command line invocation.
+</p>
+<% code("ruby") do %>
+template 'my_awesome_template' do # ~FC033
+  source 'path/to/template'
+end
+<% end %>
 
 <h4>Running only rules tagged with both tags</h4>
 <p>
