@@ -50,36 +50,15 @@ rules:
             version node['mysql']['version']
             action :install
           end
-
   - code: FC003
     name: Check whether you are running with chef server before using server-specific features
     tags:
-      - portability
-      - solo
+      - deprecated
     summary: |
-      Chef Server extends the feature-set of a Chef deployment and is probably
-      the most popular configuration. It is also possible to run the Chef client
-      in a standalone mode with Chef Solo.
-      Where your cookbooks make use of features that only exist in a Chef Server
-      based setup you should check whether you are running in solo mode.
-
-      * [https://docs.chef.io/chef_solo.html](https://docs.chef.io/chef_solo.html)
-    examples:
-      - title: Does not check for Chef Solo
-        text: |
-          This example would match the FC003 rule because it does not check if
-          it is running in Chef Solo before using search which is a
-          server-specific feature.
-        code: |
-          nodes = search(:node, "hostname:[* TO *] AND chef_environment:#{node.chef_environment}")
-      - title: Modified version
-        text: 'This modified example would not match the FC003 rule:'
-        code: |
-          if Chef::Config[:solo]
-            Chef::Log.warn('This recipe uses search. Chef Solo does not support search.')
-          else
-            nodes = search(:node, "hostname:[* TO *] AND chef_environment:#{node.chef_environment}")
-          end
+      This rule has been deprecated. Chef 12.11 switched Chef Solo to use Chef
+      Local mode which eliminates the need to avoid server specific Chef
+      functionality in recipes. With that change this rule became obsolete.
+    deprecated: true
   - code: FC004
     name: Use a service resource to start and stop services
     tags:
