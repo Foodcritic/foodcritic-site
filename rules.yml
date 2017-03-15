@@ -61,7 +61,7 @@ rules:
   - code: FC004
     name: Use a service resource to start and stop services
     tags:
-      - style
+      - portability
       - services
     summary: |
       This warning is shown if you are starting or stopping a service using the
@@ -215,6 +215,7 @@ rules:
     tags:
       - style
       - metadata
+      - supermarket
     summary: |
       This warning is shown if you used `knife cookbook create` to create a new
       cookbook and didn't override the maintainer and maintainer email. You need
@@ -313,6 +314,7 @@ rules:
     tags:
       - style
       - readme
+      - supermarket
     summary: |
       [Supermarket](https://supermarket.chef.io/) will now
       render your cookbook README documentation inline - [see this example for
@@ -335,7 +337,7 @@ rules:
   - code: FC013
     name: Use file_cache_path rather than hard-coding tmp paths
     tags:
-      - style
+      - portability
       - files
     summary: |
       This warning means that you have hard-coded a file download path in your
@@ -482,7 +484,7 @@ rules:
   - code: FC018
     name: LWRP uses deprecated notification syntax
     tags:
-      - style
+      - correctness
       - lwrp
       - deprecated
     examples:
@@ -877,7 +879,7 @@ rules:
   - code: FC030
     name: Cookbook contains debugger breakpoints
     tags:
-      - annoyances
+      - correctness
     summary: |
       [Pry is a fantastic tool](http://pryrepl.org/) for interactive
       exploration of a running Ruby program. You can place breakpoints in your
@@ -952,6 +954,7 @@ rules:
     name: Missing template
     tags:
       - correctness
+      - templates
     summary: |
       This warning is shown when the erb template associated with a
       [template resource](https://docs.chef.io/resource_template.html)
@@ -960,6 +963,7 @@ rules:
     name: Unused template variables
     tags:
       - correctness
+      - templates
     summary: |
       This warning is shown when one or more variables passed into a template
       by a [template resource](https://docs.chef.io/resource_template.html)
@@ -1013,6 +1017,7 @@ rules:
     name: Invalid notification action
     tags:
       - correctness
+      - notifications
     summary: |
       This warning is shown when a resource
       [notifies](https://docs.chef.io/resource.html#Resources-Notifications)
@@ -1089,7 +1094,6 @@ rules:
     tags:
       - style
       - recipe
-      - etsy
     summary: |
       This warning is shown if you declare an `execute` resource that uses git.
       If the command you are attempting to execute is supported by the `git`
@@ -1118,7 +1122,7 @@ rules:
     tags:
       - style
       - recipe
-      - etsy
+      - portability
     summary: |
       This warning is shown if you use an execute resource to run the `curl` or
       `wget` commands. If you are downloading a file consider using the
@@ -1144,6 +1148,7 @@ rules:
     name: Prefer include_recipe to require_recipe
     tags:
       - deprecated
+      - correctness
     summary: |
       This warning is shown when `require_recipe` is used. Because
       `require_recipe` has been deprecated you should replace any references to
@@ -1165,7 +1170,7 @@ rules:
   - code: FC043
     name: Prefer new notification syntax
     tags:
-      - style
+      - correctness
       - notifications
       - deprecated
     summary: |
@@ -1284,7 +1289,7 @@ rules:
   - code: FC048
     name: Prefer Mixlib::ShellOut
     tags:
-      - style
+      - portability
       - processes
     summary: |
       Normally to execute an operating system command with Chef you would use
@@ -1357,6 +1362,7 @@ rules:
     name: Template partials loop indefinitely
     tags:
       - correctness
+      - templates
     summary: |
       This warning is shown if a template uses template partials in a way that
       would cause an infinite loop. For example if two template partials both
@@ -1365,6 +1371,7 @@ rules:
     name: Metadata uses the unimplemented "suggests" keyword
     tags:
       - style
+      - deprecated
       - metadata
     summary: |
       This warning is shown if metadata.rb includes the suggests metadata. Suggests
@@ -1375,6 +1382,7 @@ rules:
     name: Metadata uses the unimplemented "recommends" keyword
     tags:
       - style
+      - deprecated
       - metadata
     summary: |
       This warning is shown if metadata.rb includes the recommends metadata.
@@ -1386,6 +1394,7 @@ rules:
     name: Ensure maintainer is set in metadata
     tags:
       - correctness
+      - supermarket
       - metadata
     summary: |
       This warning is shown if the metadata does not include the maintainer
@@ -1395,6 +1404,7 @@ rules:
     name: Ensure maintainer_email is set in metadata
     tags:
       - correctness
+      - supermarket
       - metadata
     summary: |
       This warning is shown if the metadata does not include the maintainer_email
@@ -1415,6 +1425,7 @@ rules:
     name: Library provider declares use_inline_resources and declares \#action_<name> methods
     tags:
       - correctness
+      - lwrp
     summary: |
       This warning is shown if a library provider includes use_inline_resources,
       but declares it's actions using action_<name> methods. The implemention of
@@ -1426,6 +1437,7 @@ rules:
     name: LWRP provider does not declare use_inline_resources
     tags:
       - correctness
+      - lwrp
     summary: |
       This warning is shown if a LWRP provider does not specify
       use_inline_resources. use_inline_resources executes provider resources in
@@ -1437,6 +1449,7 @@ rules:
     name: LWRP provider declares use_inline_resources and declares \#action_<name> methods
     tags:
       - correctness
+      - lwrp
     summary: |
       This warning is shown if a LWRP provider includes use_inline_resources,
       but declares it's actions using action_<name> methods. The implemention of
@@ -1457,6 +1470,7 @@ rules:
     name: Cookbook should have version metadata
     tags:
       - metadata
+      - correctness
     summary: |
       This warning is shown if a cookbook does not contain a version string in
       the metadata file. Without a version string cookbooks will be uploaded as
@@ -1466,6 +1480,7 @@ rules:
     name: Cookbook incorrectly depends on itself
     tags:
       - metadata
+      - correctness
     summary: |
       This warning is shown if a cookbook depends on itself within its own metadata.
       Cookbooks need specify a dependency on other cookbooks which they rely on, but
@@ -1476,6 +1491,7 @@ rules:
     tags:
       - metadata
       - supermarket
+      - chef12
     applies_to: '>= 12.0.0'
     summary: |
       This warning is shown if a cookbook does not include the issues_url property in
@@ -1498,6 +1514,7 @@ rules:
     tags:
       - metadata
       - supermarket
+      - chef12
     applies_to: '>= 12.0.0'
     summary: |
       This warning is shown if a cookbook does not include the source_url property in
