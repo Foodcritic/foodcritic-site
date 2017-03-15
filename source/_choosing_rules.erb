@@ -25,15 +25,6 @@
   <code>~</code> (tilde) modifier at the command line.
 </p>
 <code>$ foodcritic -t ~FC002</code>
-<p>
-  You may also ignore rules in source code using a comment with the same
-  tilde modifier and rule code syntax as in the command line invocation.
-</p>
-<% code("ruby") do %>
-template 'my_awesome_template' do # ~FC033
-  source 'path/to/template'
-end
-<% end %>
 
 <h4>Running only rules tagged with both tags</h4>
 <p>
@@ -52,22 +43,46 @@ end
 </p>
 <code>$ foodcritic -t style,services</code>
 
-<h3>Saving your tag options</h3>
-
-<p>
-  You can create a <code>.foodcritic</code> file within each cookbook to
-  define the rules that you want to have checked when foodcritic runs.
-  <code>$ echo "style,services" &gt; my_cookbook/.foodcritic</code>
-</p>
-<p>
-  When you run foodcritic with no arguments and a <code>.foodcritic</code>
-  file is present in the cookbook directory it will check only the tags you
-  have specified in that file.
-</p>
-
 <h3 id="tag-reference">Tag Reference</h3>
 <p>
   Below is the list of built-in foodcritic rules shown by tag:
 </p>
 
 <%= partial "rules_by_tag" %>
+
+<h3>Disabling Rules and Tags Inline</h3>
+<p>
+  Disabling certain tags is useful on the command line, but what if you
+  need to disable a tag or a particular rule for just a single part of a recipe?
+  Foodcritic allows you to disable individual rules or tags using a special
+  code comment.
+</p>
+
+<h4>Disabling FC033 for a single template resource</h4>
+<% code("ruby") do %>
+template 'my_awesome_template' do # ~FC033
+  source 'path/to/template'
+end
+<% end %>
+
+<h3>Enabling and Disabling Tags Per Cookbook</h4>
+<p>
+  Foodcritic tags can be enabled or disabled by including a <code>.foodcritic</code>
+  file at the root of your cookbook directory. Within this file you can tags
+  or rules similar to how you would do on the command line.
+</p>
+
+<h4>Enabling style and services</h3>
+
+<p>
+  To check rules with the style or services tag you would create a .foodcritic
+  file containing <code>style,services</code>. For example:
+  <code>$ echo "style,services" &gt; my_cookbook/.foodcritic</code>
+</p>
+
+<h4>Disabling Just FC016</h3>
+
+<p>
+  To disable just a single rule such as FC016 create a .foodcritic file
+  containing <code>~FC016</code>. For example: <code>$ echo "~FC016" &gt; my_cookbook/.foodcritic</code>
+</p>
