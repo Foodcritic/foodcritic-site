@@ -650,6 +650,7 @@ rules:
       coding style to use not_if and only_if within the resources, there are several
       downsides to this including the inclusion of the resources within resource collection
       and reporting.
+    deprecated: true
   - code: FC024
     name: Consider adding platform equivalents
     tags:
