@@ -643,44 +643,13 @@ rules:
           end
   - code: FC023
     name: Prefer conditional attributes
-    tags:
-      - style
     summary: |
-      This warning means you have surrounded a resource with an `if` or `unless`
-      rather than defining the condition directly on the resource itself. Note
-      that this warning is only raised for single resources as you could
-      reasonably enclose multiple resources in a condition like this for
-      brevity.
-
-      [Jay Feldblum](https://github.com/yfeldblum) has
-      [expressed criticism](https://supermarket.chef.io/chat/chef/2012-06-19#id-138584)
-      of this rule because the effect is that resources are defined
-      unnecessarily and ignored only at run-time. His view is that it is cleaner
-      to use standard Ruby conditionals to avoid defining them in the first place.
-    examples:
-      - title: Resource enclosed in a condition
-        text: |
-          This example matches the FC023 rule because it encloses a rule within
-          a condition, rather than using the built-in Chef `not_if` or `only_if`
-          conditional execution attributes.
-
-          * [https://docs.chef.io/resource_common.html#guards](https://docs.chef.io/resource_common.html#guards)
-        code: |
-          # Don't do this
-          if node['foo'] == 'bar'
-            service 'apache' do
-              action :enable
-            end
-          end
-      - title: Modified version
-        text: |
-          You can avoid the warning above with more idiomatic Chef that
-          specifies the condition above as an attribute on the resource:
-        code: |
-          service 'apache' do
-            action :enable
-            only_if { node['foo'] == 'bar' }
-          end
+      This rule has been deprecated. While it's often considered a more chef like
+      coding style to use not_if and only_if within the resources, there are several
+      downsides to this including the inclusion of the resources within resource collection
+      and reporting.
+    tags:
+      - deprecated
   - code: FC024
     name: Consider adding platform equivalents
     tags:
