@@ -643,13 +643,13 @@ rules:
           end
   - code: FC023
     name: Prefer conditional attributes
+    tags:
+      - deprecated
     summary: |
       This rule has been deprecated. While it's often considered a more chef like
       coding style to use not_if and only_if within the resources, there are several
       downsides to this including the inclusion of the resources within resource collection
       and reporting.
-    tags:
-      - deprecated
   - code: FC024
     name: Consider adding platform equivalents
     tags:
@@ -664,11 +664,9 @@ rules:
       * and the conditional does not include a platform known to belong to the
         same family
 
-      If you are using
-      [Ohai 0.6.12](http://www.chef.io/blog/2012/03/22/ohai-0-6-12-released/)
-      or greater you should probably use `platform_family` instead. Otherwise
-      for the greatest portability consider adding the missing platforms to
-      your conditional.
+      If at all possible you should consider using `platform_family` instead of
+      platform to ensure you support similar distros. Otherwise for the greatest
+      portability consider adding the missing platforms to your conditional.
     examples:
       - title: Case statement has a subset of platform flavours
         text: |
