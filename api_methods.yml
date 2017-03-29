@@ -41,26 +41,6 @@ api_methods:
       - category: return
         type: Array
         description: The matching nodes if any
-  - name: checks_for_chef_solo?
-    description: |
-      Does the specified recipe check for
-      [Chef Solo](https://docs.chef.io/chef_solo.html)?
-
-      You can use this to check for the portability of the recipe between
-      Chef Server and Chef Solo.
-    examples: |
-      # Returns true if the recipe checks for Chef Solo before using
-      # server-specific functionality.
-      checks_for_chef_solo?(ast)
-    signature:
-      - category: param
-        type: 'Nokogiri::XML::Node'
-        name: ast
-        description: The AST of the cookbook recipe to check
-      - category: return
-        type: Boolean
-        description: |
-          True if there is a test for `Chef::Config[:solo]` in the recipe
   - name: chef_dsl_methods
     description: |
       The set of methods in the Chef DSL.
@@ -76,24 +56,6 @@ api_methods:
         type: Array
         description: |
           Array of method symbols
-  - name: chef_solo_search_supported?
-    description: |
-      Is the [chef-solo-search](https://github.com/edelight/chef-solo-search) library available?
-
-      Will return `true` if any cookbook in the cookbook tree relative to the
-      specified recipe includes the chef-solo-search library. You can use this
-      to see if search is available in Chef Solo mode.
-    examples: |
-      # True if chef_solo_search is supported
-      chef_solo_search_supported?('foo/recipes/default.rb')
-    signature:
-      - category: param
-        type: String
-        name: recipe_path
-        description: The path to the current recipe
-      - category: return
-        type: Boolean
-        description: True if the chef-solo-search library is available.
   - name: cookbook_name
     description: |
       The name of the cookbook containing the specified file.
