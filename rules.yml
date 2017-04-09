@@ -1500,3 +1500,12 @@ rules:
           name 'example'
           version '1.0.0'
           source_url 'https://github.com/chef-cookbooks/something' if respond_to?(:source_url)
+  - code: FC073
+    name: Root alias file shadowing non-alias file
+    tags:
+      - correctness
+      - chef13
+    applies_to: '>= 13.0.0'
+    summary: |
+      This warning is shown if a cookbook contains both a root alias and the target of the
+      alias. Chef will ignore the non-alias file so it should be removed.
