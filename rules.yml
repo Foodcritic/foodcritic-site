@@ -1596,7 +1596,15 @@ rules:
         code: |
           name 'example'
           version '1.0.0'
-          supports 'redhat'       
+          supports 'redhat'
+  - code: FC071
+    name: Missing LICENSE file
+    tags:
+      - style
+      - license
+    summary: |
+      This warning is shown if a cookbook is missing a LICENSE file. Including a LICENSE 
+      file enables users to understand whether they can use, change or distribute a cookbook.
   - code: FC073
     name: Root alias file shadowing non-alias file
     tags:
