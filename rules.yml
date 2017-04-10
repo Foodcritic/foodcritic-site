@@ -1522,6 +1522,7 @@ rules:
     name: Ensure at least one platform supported in metadata
     tags:
       - metadata
+      - supermarket
     summary: |
       This warning is shown if a cookbook does not include any supports properties
       in its metadata file. supports is used to clearly specify platform support
@@ -1540,6 +1541,8 @@ rules:
     name: Ensure license is set in metadata
     tags:
       - metadata
+      - supermarket
+      - license
     summary: |
       This warning is shown if a cookbook does not include a license property
       in its metadata file. license is used to clearly specify how the cookbook
@@ -1573,7 +1576,27 @@ rules:
         code: |
           name 'example'
           version '1.0.0'
-          license 'Apache-2.0'       
+          license 'Apache-2.0'
+  - code: FC070
+    name: Ensure supports metadata defines valid platforms
+    tags:
+      - metadata
+      - supermarket
+    summary: |
+      This warning is shown if a cookbook uses an invalid platform for a supports property
+      in its metadata file. Using a valid platform enables users to identify supported 
+      cookbooks. 
+    examples:
+      - title: Metadata with an invalid supports property
+        code: |
+          name 'example'
+          version 'Apache 2.0'
+          supports 'rhel'
+      - title: Modified version with valid supports property
+        code: |
+          name 'example'
+          version '1.0.0'
+          supports 'redhat'       
   - code: FC073
     name: Root alias file shadowing non-alias file
     tags:
