@@ -1500,6 +1500,113 @@ rules:
           name 'example'
           version '1.0.0'
           source_url 'https://github.com/chef-cookbooks/something' if respond_to?(:source_url)
+  - code: FC066
+    name: Ensure chef_version is set in metadata
+    tags:
+      - metadata
+    summary: |
+      This warning is shown if a cookbook does not include the chef_version property
+      in its metadata file. chef_version is used to clearly specify chef version 
+      compatibility to users and to chef-client.
+    examples:
+      - title: Metadata without chef_version
+        code: |
+          name 'example'
+          version '1.0.0'
+      - title: Modified version with chef_version
+        code: |
+          name 'example'
+          version '1.0.0'
+          chef_version '>= 12.5' if respond_to?(:chef_version)
+  - code: FC067
+    name: Ensure at least one platform supported in metadata
+    tags:
+      - metadata
+      - supermarket
+    summary: |
+      This warning is shown if a cookbook does not include any supports properties
+      in its metadata file. supports is used to clearly specify platform support
+      to users. Platform badges are added to cookbooks on Supermarket which allows
+      users to search for specific platform supported cookbooks.
+    examples:
+      - title: Metadata without supports
+        code: |
+          name 'example'
+          version '1.0.0'
+      - title: Modified version with supports
+        code: |
+          name 'example'
+          version '1.0.0'
+          supports 'redhat'
+  - code: FC068
+    name: Ensure license is set in metadata
+    tags:
+      - metadata
+      - supermarket
+      - license
+    summary: |
+      This warning is shown if a cookbook does not include a license property
+      in its metadata file. license is used to clearly specify how the cookbook
+      can be used, modified, and shared to users and is displayed on Supermarket.
+    examples:
+      - title: Metadata without license
+        code: |
+          name 'example'
+          version '1.0.0'
+      - title: Modified version with license
+        code: |
+          name 'example'
+          version '1.0.0'
+          license 'Apache-2.0'
+  - code: FC069
+    name: Ensure standardized license defined in metadata
+    tags:
+      - metadata
+      - supermarket
+      - license
+    summary: |
+      This warning is shown if a cookbook does not use a standardized [SPDX.org](https://spdx.org/licenses/) defined license
+      for the license property in its metadata file. Using a standardized license list enables
+      users to identify valid compliant licenses.
+    examples:
+      - title: Metadata with non-standardized license
+        code: |
+          name 'example'
+          version 'Apache 2.0'
+      - title: Modified version with standardized license
+        code: |
+          name 'example'
+          version '1.0.0'
+          license 'Apache-2.0'
+  - code: FC070
+    name: Ensure supports metadata defines valid platforms
+    tags:
+      - metadata
+      - supermarket
+    summary: |
+      This warning is shown if a cookbook uses an invalid platform for a supports property
+      in its metadata file. Using a valid platform enables users to identify supported 
+      cookbooks and ensures that searching on Supermarket with platforms specified 
+      returns the supported cookbooks.
+    examples:
+      - title: Metadata with an invalid supports property
+        code: |
+          name 'example'
+          version 'Apache 2.0'
+          supports 'rhel'
+      - title: Modified version with valid supports property
+        code: |
+          name 'example'
+          version '1.0.0'
+          supports 'redhat'
+  - code: FC071
+    name: Missing LICENSE file
+    tags:
+      - style
+      - license
+    summary: |
+      This warning is shown if a cookbook is missing a LICENSE file. Including a LICENSE 
+      file enables users to understand whether they can use, change or distribute a cookbook.
   - code: FC073
     name: Root alias file shadowing non-alias file
     tags:
