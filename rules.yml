@@ -1517,7 +1517,25 @@ rules:
         code: |
           name 'example'
           version '1.0.0'
-          chef_version '>= 12.5' if respond_to?(:chef_version)      
+          chef_version '>= 12.5' if respond_to?(:chef_version)
+  - code: FC067
+    name: Ensure at least one platform supported in metadata
+    tags:
+      - metadata
+    summary: |
+      This warning is shown if a cookbook does not include any supports properties
+      in its metadata file. supports is used to clearly specify platform support
+      to users.
+    examples:
+      - title: Metadata without supports
+        code: |
+          name 'example'
+          version '1.0.0'
+      - title: Modified version with supports
+        code: |
+          name 'example'
+          version '1.0.0'
+          supports redhat      
   - code: FC073
     name: Root alias file shadowing non-alias file
     tags:
