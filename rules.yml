@@ -1507,7 +1507,7 @@ rules:
     summary: |
       This warning is shown if a cookbook does not include the chef_version property
       in its metadata file. chef_version is used to clearly specify chef version 
-      compatibility to users.
+      compatibility to users and to chef-client.
     examples:
       - title: Metadata without chef_version
         code: |
@@ -1526,7 +1526,8 @@ rules:
     summary: |
       This warning is shown if a cookbook does not include any supports properties
       in its metadata file. supports is used to clearly specify platform support
-      to users.
+      to users. Platform badges are added to cookbooks on Supermarket which allows
+      users to search for specific platform supported cookbooks.
     examples:
       - title: Metadata without supports
         code: |
@@ -1546,7 +1547,7 @@ rules:
     summary: |
       This warning is shown if a cookbook does not include a license property
       in its metadata file. license is used to clearly specify how the cookbook
-      can be used, modified, and shared to users. 
+      can be used, modified, and shared to users and is displayed on Supermarket.
     examples:
       - title: Metadata without license
         code: |
@@ -1564,7 +1565,7 @@ rules:
       - supermarket
       - license
     summary: |
-      This warning is shown if a cookbook does not use a standardized SPDX.org defined license
+      This warning is shown if a cookbook does not use a standardized [SPDX.org](https://spdx.org/licenses/) defined license
       for the license property in its metadata file. Using a standardized license list enables
       users to identify valid compliant licenses.
     examples:
@@ -1585,7 +1586,8 @@ rules:
     summary: |
       This warning is shown if a cookbook uses an invalid platform for a supports property
       in its metadata file. Using a valid platform enables users to identify supported 
-      cookbooks. 
+      cookbooks and ensures that searching on Supermarket with platforms specified 
+      returns the supported cookbooks.
     examples:
       - title: Metadata with an invalid supports property
         code: |
