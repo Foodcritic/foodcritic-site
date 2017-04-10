@@ -1535,7 +1535,25 @@ rules:
         code: |
           name 'example'
           version '1.0.0'
-          supports redhat      
+          supports 'redhat'
+  - code: FC068
+    name: Ensure license is set in metadata
+    tags:
+      - metadata
+    summary: |
+      This warning is shown if a cookbook does not include a license property
+      in its metadata file. license is used to clearly specify how the cookbook
+      can be used, modified, and shared to users. 
+    examples:
+      - title: Metadata without license
+        code: |
+          name 'example'
+          version '1.0.0'
+      - title: Modified version with license
+        code: |
+          name 'example'
+          version '1.0.0'
+          license 'Apache-2.0'      
   - code: FC073
     name: Root alias file shadowing non-alias file
     tags:
