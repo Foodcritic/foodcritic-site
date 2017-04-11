@@ -1592,7 +1592,7 @@ rules:
       - title: Metadata with an invalid supports property
         code: |
           name 'example'
-          version 'Apache 2.0'
+          version '1.0.0'
           supports 'rhel'
       - title: Modified version with valid supports property
         code: |
