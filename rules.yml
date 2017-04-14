@@ -1076,6 +1076,7 @@ rules:
           This example matches the FC040 rule because an `execute` resource is
           used where you could instead use a `git` resource.
         code: |
+          # Don't do this
           execute 'git clone https://github.com/git/git.git' do
             action :run
           end
@@ -1105,6 +1106,7 @@ rules:
           This example matches the FC041 rule because an `execute` resource is
           used where you could instead use a `remote_file` resource.
         code: |
+          # Don't do this
           execute "cd /tmp && wget 'http://example.org/'" do
             action :run
           end
@@ -1186,6 +1188,7 @@ rules:
           This example matches the FC044 rule because it refers to the
           `hostname` attribute as a bare attribute.
         code: |
+          # Don't do this
           default['myhostname'] = hostname
       - title: Modified version
         text: |
@@ -1193,6 +1196,7 @@ rules:
           reference to the `hostname` attribute has been qualified so that
           the meaning is more apparent.
         code: |
+          # Do this instead
           default['myhostname'] = node['hostname']
   - code: FC045
     name: Metadata does not contain cookbook name
