@@ -494,11 +494,17 @@ rules:
         text: |
           This example uses the newer syntax and will not raise the warning.
         code: |
+          # Approach 1: Using converge_by
+          action :create do
+            converge_by("Creating my_resource #{new_resource.name}") do
+              # create action implementation
+            end
+          end
+
+          # Approach 2: Using use_inline_resources
+          use_inline_resources
           action :create do
             # create action implementation
-
-            # My state has changed so I'd better notify observers
-            new_resource.updated_by_last_action(true)
           end
   - code: FC019
     name: Access node attributes in a consistent manner
@@ -675,7 +681,7 @@ rules:
               package 'foo' do
                 action :install
               end
-            when 'centos', 'redhat', 'amazon', 'scientific', 'oracle'
+            when 'centos', 'redhat', 'scientific', 'oracle'
               package 'bar' do
                 action :install
               end
@@ -709,7 +715,9 @@ rules:
         text: |
           Use `chef_gem` to install the gem to avoid this warning.
         code: |
-          chef_gem 'mysql'
+          chef_gem 'mysql' do
+            compile_time true
+          end
   - code: FC026
     name: Conditional execution block attribute contains only string
     tags:
