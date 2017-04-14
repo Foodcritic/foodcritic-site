@@ -86,6 +86,7 @@ rules:
       - title: Modified version
         text: 'This modified example would not match the FC004 rule:'
         code: |
+          # Do this instead
           service 'tomcat' do
             action :start
           end
@@ -236,6 +237,7 @@ rules:
       - title: Modified version
         text: 'This modified example would not match the FC008 rule:'
         code: |
+          # Do this instead
           maintainer 'Example Ltd'
           maintainer_email 'postmaster@example.com'
           license 'All rights reserved'
@@ -272,6 +274,7 @@ rules:
           Checking the documentation we can see the correct attribute is
           `owner`.
         code: |
+          # Do this instead
           file '/tmp/something' do
             owner 'root'
             group 'root'
@@ -359,6 +362,7 @@ rules:
       - title: Modified version
         text: 'To remove this warning use the configured `file_cache_path`:'
         code: |
+          # Do this instead
           remote_file "#{Chef::Config[:file_cache_path]}/large-file.tar.gz" do
             source 'http://www.example.org/large-file.tar.gz'
           end
@@ -394,8 +398,6 @@ rules:
       This warning means that the LWRP does not declare a default action. You
       should normally define a default action on your resource to avoid
       confusing users. Most resources have an intuitive default action.
-
-      * [https://docs.chef.io/lwrp_custom_resource.html#default-action](https://docs.chef.io/lwrp_custom_resource.html#default-action)
     examples:
       - title: Resource without a default action
         text: |
@@ -403,23 +405,16 @@ rules:
           default action.
         code: |
           # Don't do this
-          actions :create
+          actions :create, :delete
       - title: Modified version
         text: |
           With a default action specified this warning will no longer be
           displayed.
         code: |
-          actions :create
-
-          # Chef 0.10.10 or greater
+          # Do this instead
+          actions :create, :delete
           default_action :create
 
-          # In earlier versions of Chef the LWRP DSL doesn't support specifying
-          # a default action, so you need to drop into Ruby.
-          def initialize(*args)
-            super
-            @action = :create
-          end
   - code: FC017
     name: LWRP does not notify when updated
     tags:
@@ -541,6 +536,7 @@ rules:
           end
       - title: Modified version
         code: |
+          # Do this instead
           node['apache']['dir'] = '/etc/apache2'
 
           directory node['apache']['dir'] do
@@ -594,6 +590,7 @@ rules:
           By making the resource name change for each unique instance of our
           LWRP instance we avoid this behaviour.
         code: |
+          # Do this instead
           action :feed do
             execute "feed_pet_#{new_resource.name}" do
               command "echo 'Feeding: #{new_resource.name}'; touch '/tmp/#{new_resource.name}'"
@@ -634,6 +631,7 @@ rules:
         text: |
           By making the resource name change for each iteration of the loop we avoid this behaviour.
         code: |
+          # Do this instead
           %w{rover fido}.each do |pet_name|
             execute "feed_pet_#{pet_name}" do
               command "echo 'Feeding: #{pet_name}'; touch '/tmp/#{pet_name}'"
@@ -757,6 +755,7 @@ rules:
           If the intention is to run the string as an operating system command
           then remove the block surrounding the command.
         code: |
+          # Do this instead
           template '/etc/foo' do
             mode '0644'
             source 'foo.erb'
@@ -787,6 +786,7 @@ rules:
           In this particular example you can achieve the same effect by using
           the service `:start` action.
         code: |
+          # Do this instead
           service 'foo' do
             action :start
           end
@@ -815,6 +815,7 @@ rules:
           Remove the leading `node.` from the use of `platform?` to resolve
           this warning.
         code: |
+          # Do this instead
           file '/etc/foo' do
             only_if { platform?('commodore64') }
           end
@@ -840,6 +841,7 @@ rules:
         text: |
           This modified example would not match the FC029 rule:
         code: |
+          # Do this instead
           name 'example'
           version '1.2.3'
           recipe 'example::default', 'Installs Example'
@@ -872,6 +874,7 @@ rules:
         text: |
           This modified example would not match the FC030 rule:
         code: |
+          # Do this instead
           template '/etc/foo' do
             source 'foo.erb'
           end
@@ -914,6 +917,7 @@ rules:
           This modified example would not match the FC032 rule because the
           mispelt timing has been corrected.
         code: |
+          # Do this instead
           template '/etc/foo' do
             notifies :restart, 'service[foo]', :immediately
           end
@@ -1005,6 +1009,7 @@ rules:
           This modified example would not match the FC037 rule because the
           action has been corrected.
         code: |
+          # Do this instead
           template '/etc/foo.conf' do
             notifies :restart, 'service[foo]'
           end
@@ -1030,6 +1035,7 @@ rules:
           This modified example would not match the FC038 rule because the
           action has been corrected.
         code: |
+          # Do this instead
           service 'foo' do
             action :nothing
           end
@@ -1055,6 +1061,7 @@ rules:
           This modified example would not match the FC039 rule because the
           `run_state` is referenced as a method.
         code: |
+          # Do this instead
           node.run_state['nginx_force_recompile'] = false
   - code: FC040
     name: Execute resource used to run git commands
@@ -1078,6 +1085,7 @@ rules:
           This modified example would not match the FC040 rule because the
           `execute` resource has been replaced by a `git` resource.
         code: |
+          # Do this instead
           git '/foo/bar' do
             repository 'git://github.com/git/git.git'
             reference 'master'
@@ -1106,6 +1114,7 @@ rules:
           This modified example would not match the FC041 rule because the
           `execute` resource has been replaced by a `remote_file` resource.
         code: |
+          # Do this instead
           remote_file '/tmp/testfile' do
             source 'http://www.example.org/'
           end
@@ -1131,6 +1140,7 @@ rules:
           This modified example would not match the FC042 rule because the
           `require_recipe` statement has been replaced with `include_recipe`.
         code: |
+          # Do this instead
           include_recipe 'apache2::default'
   - code: FC043
     name: Prefer new notification syntax
@@ -1148,6 +1158,7 @@ rules:
           This example matches the FC043 rule because it uses the older
           notification syntax.
         code: |
+          # Don't do this
           template '/etc/www/configures-apache.conf' do
             notifies :restart, resources(:service => 'apache')
           end
@@ -1156,6 +1167,7 @@ rules:
           This modified example would not match the FC043 rule because the
           syntax of the notification has been updated to use the new format.
         code: |
+          # Do this instead
           template '/etc/www/configures-apache.conf' do
             notifies :restart, 'service[apache]'
           end
@@ -1323,6 +1335,7 @@ rules:
           This modified example would not match the FC050 rule because the space
           has been removed from the role name.
         code: |
+          # Do this instead
           name 'webserver'
           run_list 'recipe[apache2]'
   - code: FC051
@@ -1415,7 +1428,7 @@ rules:
       provider resource is updated, and also avoids the need to uniquely name
       resources in the provider.
   - code: FC058
-    name: Library provider declares use_inline_resources and declares \#action_<name> methods
+    name: Library provider declares use_inline_resources and declares action_<name> methods
     tags:
       - correctness
       - lwrp
@@ -1463,11 +1476,13 @@ rules:
     examples:
       - title: Metadata with incorrect version
         code: |
+          # Don't do this
           name 'example'
           version '1.0.0.1'
           depends 'example'
       - title: Metadata with valid version
         code: |
+          # Do this instead
           name 'example'
           version '1.0.1'
   - code: FC062
@@ -1493,11 +1508,13 @@ rules:
     examples:
       - title: Metadata depending on itself
         code: |
+          # Don't do this
           name 'example'
           version '1.0.0'
           depends 'example'
       - title: Modified metadata that doesn't depend on itself
         code: |
+          # Do this instead
           name 'example'
           version '1.0.0'
   - code: FC064
@@ -1516,10 +1533,12 @@ rules:
     examples:
       - title: Metadata without issues_url
         code: |
+          # Don't do this
           name 'example'
           version '1.0.0'
       - title: Modified version with Chef 11 compatibility check
         code: |
+          # Do this instead
           name 'example'
           version '1.0.0'
           issues_url 'https://github.com/chef-cookbooks/something/issues' if respond_to?(:issues_url)
