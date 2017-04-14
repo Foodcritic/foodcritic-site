@@ -52,8 +52,6 @@ rules:
           end
   - code: FC003
     name: Check whether you are running with chef server before using server-specific features
-    tags:
-      - deprecated
     summary: |
       This rule has been deprecated. Chef 12.11 switched Chef Solo to use Chef
       Local mode which eliminates the need to avoid server specific Chef
@@ -546,8 +544,6 @@ rules:
           end
   - code: FC020
     name: Conditional execution string attribute looks like Ruby
-    tags:
-      - correctness
     summary: |
       This rule has been deprecated due to the frequency of false positives.
       See the discussion against
@@ -640,8 +636,6 @@ rules:
           end
   - code: FC023
     name: Prefer conditional attributes
-    tags:
-      - deprecated
     summary: |
       This rule has been deprecated. While it's often considered a more chef like
       coding style to use not_if and only_if within the resources, there are several
@@ -976,8 +970,6 @@ rules:
           # var_b=<%= @config_var_b %>
   - code: FC035
     name: Template uses node attribute directly
-    tags:
-      - style
     summary: |
       This rule has been deprecated. See the discussion against
       [issue #60](https://github.com/acrmp/foodcritic/issues/60) for more

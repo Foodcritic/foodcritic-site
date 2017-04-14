@@ -17,11 +17,11 @@ module RuleHelper
   end
 
   def tags
-    rules.map{|r| r['tags']}.flatten.sort.uniq
+    rules.map{|r| r['tags'].nil? ? [] : r['tags'] }.flatten.sort.uniq
   end
 
   def rules_by_tag
-    Hash[tags.map{|t| [t, rules.select{|r| r['tags'].include?(t)}]}]
+    Hash[tags.map{|t| [t, rules.select{|r| r['tags'] && r['tags'].include?(t)}]}]
   end
 
   private
