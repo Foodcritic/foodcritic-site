@@ -45,6 +45,7 @@ rules:
       - title: Modified version
         text: 'This modified example would not match the FC002 rule:'
         code: |
+          # Do this instead
           package 'mysql-server' do
             version node['mysql']['version']
             action :install
@@ -305,6 +306,7 @@ rules:
         text: |
           With the characters escaped this will no longer match the rule.
         code: |
+          # Do this instead
           search(:node, 'run_list:recipe\[foo\:\:bar\]') do |matching_node|
             puts matching_node.to_s
           end
@@ -1220,6 +1222,7 @@ rules:
           This modified example would not match the FC046 rule because the
           assign unless nil expression has been replaced with `default_unless`.
         code: |
+          # Do this instead
           default_unless['somevalue'] = []
   - code: FC047
     name: Attribute assignment does not specify precedence
@@ -1248,6 +1251,7 @@ rules:
           attribute assignment has been updated to specify a precedence level
           of `normal`.
         code: |
+          # Do this instead
           node.normal['foo'] = 'bar'
   - code: FC048
     name: Prefer Mixlib::ShellOut
@@ -1279,6 +1283,7 @@ rules:
           This modified example would not match the FC048 rule because it is
           using the `Mixlib::ShellOut` library.
         code: |
+          # Do this instead
           cmd = Mixlib::ShellOut.new('some_command')
           cmd.run_command
           cmd.error!
@@ -1330,7 +1335,7 @@ rules:
       would cause an infinite loop. For example if two template partials both
       include each other.
   - code: FC052
-    name: Metadata uses the unimplemented "suggests" keyword
+    name: Metadata uses the deprecated "suggests" keyword
     tags:
       - style
       - deprecated
@@ -1340,8 +1345,21 @@ rules:
       metadata was often used to inform users that a cookbook was required for
       a particular use case, but suggests itself was never implemented in chef-client.
       Adding suggests has no impact on the chef-client run and should be avoided.
+    examples:
+      - title: Metadata with the deprecated suggests keyword
+        code: |
+          # Don't do this
+          name 'example'
+          version '1.0.0'
+          suggests 'windows'
+      - title: Metadata instead using a depends keyword
+        code: |
+          # Do this instead
+          name 'example'
+          version '1.0.0'
+          depends 'windows'
   - code: FC053
-    name: Metadata uses the unimplemented "recommends" keyword
+    name: Metadata uses the deprecated "recommends" keyword
     tags:
       - style
       - deprecated
@@ -1352,6 +1370,19 @@ rules:
       recommended for a particular use case, but recommends itself was never
       implemented in chef-client. Adding recommends has no impact on the
       chef-client run and should be avoided.
+    examples:
+      - title: Metadata with the deprecated recommends keyword
+        code: |
+          # Don't do this
+          name 'example'
+          version '1.0.0'
+          recommends 'windows'
+      - title: Metadata instead using a depends keyword
+        code: |
+          # Do this instead
+          name 'example'
+          version '1.0.0'
+          depends 'windows'
   - code: FC055
     name: Ensure maintainer is set in metadata
     tags:
@@ -1429,6 +1460,16 @@ rules:
       This warning is shown if a cookbook includes an invalid version string in
       the metadata file. Cookbooks that do not follow this format cannot be
       uploaded to the chef server.
+    examples:
+      - title: Metadata with incorrect version
+        code: |
+          name 'example'
+          version '1.0.0.1'
+          depends 'example'
+      - title: Metadata with valid version
+        code: |
+          name 'example'
+          version '1.0.1'
   - code: FC062
     name: Cookbook should have version metadata
     tags:
@@ -1449,6 +1490,16 @@ rules:
       Cookbooks need specify a dependency on other cookbooks which they rely on, but
       all recipes, resources and libraries within the cookbook itself are loaded and
       available so there is noneed for a self dependency.
+    examples:
+      - title: Metadata depending on itself
+        code: |
+          name 'example'
+          version '1.0.0'
+          depends 'example'
+      - title: Modified metadata that doesn't depend on itself
+        code: |
+          name 'example'
+          version '1.0.0'
   - code: FC064
     name: Ensure issues_url is set in metadata
     tags:
@@ -1559,14 +1610,15 @@ rules:
       - supermarket
       - license
     summary: |
-      This warning is shown if a cookbook does not use a standardized [SPDX.org](https://spdx.org/licenses/) defined license
-      for the license property in its metadata file. Using a standardized license list enables
-      users to identify valid compliant licenses.
+      This warning is shown if a cookbook does not use a standardized [SPDX.org](https://spdx.org/licenses/)
+      defined license for the license property in its metadata file. Using a
+      standardized license list enables users to identify valid compliant licenses.
     examples:
       - title: Metadata with non-standardized license
         code: |
           name 'example'
-          version 'Apache 2.0'
+          version '1.0.0'
+          license 'Apache 2.0'
       - title: Modified version with standardized license
         code: |
           name 'example'
@@ -1599,8 +1651,35 @@ rules:
       - style
       - license
     summary: |
-      This warning is shown if a cookbook is missing a LICENSE file. Including a LICENSE
-      file enables users to understand whether they can use, change or distribute a cookbook.
+      This warning is shown if a cookbook does not include a LICENSE file. A LICENSE
+      file allows consumers of cookbooks to determine if the terms allow them to use,
+      change or distribute a cookbook. The file is also parsed by many  many online
+      services such as Github to provide addition functionality within their services.
+  - code: FC072
+    name: Metadata should not contain "attribute" keyword
+    tags:
+      - metadata
+      - style
+    summary: |
+      This warning is shown if a cookbook defines its attributes in the metadata.rb file.
+      Attributes defined in the metadata.rb file are not used by the chef-client or
+      Supermarket and often become out of sync with the attributes files / readme.rb.
+      Documentation for attributes should instead be placed in the readme itself.
+    examples:
+      - title: Metadata with a deprecated attributes keyword
+        code: |
+          # Don't do this
+          name 'example'
+          version '1.0.0'
+          attribute 'something',
+            :display_name => 'Something',
+            :description => 'Hash of Something attributes',
+            :type => 'hash'
+      - title: Metadata without a deprecated attributes keyword
+        code: |
+          # Do this instead
+          name 'example'
+          version '1.0.0'
   - code: FC073
     name: Root alias file shadowing non-alias file
     tags:
@@ -1610,3 +1689,40 @@ rules:
     summary: |
       This warning is shown if a cookbook contains both a root alias and the target of the
       alias. Chef will ignore the non-alias file so it should be removed.
+  - code: FC074
+    name: LWRP should use DSL to define resource's default action
+    tags:
+      - correctness
+      - lwrp
+    summary: |
+      Chef 11 introduced a new DSL method 'default_action' for LWRPs that allows
+      defining the default action a LWRP should run if no action is specified.
+      This method should be used instead of defining the default actoin through
+      an initialize method in the resource.
+    examples:
+      - title: LWRP defining a default action through an initialize method
+        code: |
+          # Don't do this
+          actions :add, :remove
+
+          def initialize(*args)
+            super
+            @action = :add
+          end
+      - title: LWRP defining a default action through the DSL method
+        code: |
+          # Do this instead
+          actions :add, :remove
+          default_action :add
+  - code: FC075
+    name: Cookbook uses node.save to save partial node data to the chef-server mid-run
+    tags:
+      - correctness
+    summary: |
+      Chef provides a 'node.save' method, which allows saving the state of the
+      node part way through a chef-client run. This is often used to ensure a run_list
+      is saved or so that other state information is immediately available for search
+      by other nodes in your environment. The use of node.save can be incredibly
+      problematic and should be avoided as a run failure will still result in the
+      node data being saved to the Chef server. If search is used to put nodes into
+      production state this may result in non-functioning nodes being used.
