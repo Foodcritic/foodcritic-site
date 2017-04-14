@@ -213,7 +213,6 @@ rules:
   - code: FC008
     name: Generated cookbook metadata needs updating
     tags:
-      - style
       - metadata
       - supermarket
     summary: |
@@ -312,7 +311,6 @@ rules:
   - code: FC011
     name: Missing README in markdown format
     tags:
-      - style
       - readme
       - supermarket
     summary: |
@@ -327,7 +325,7 @@ rules:
   - code: FC012
     name: Use Markdown for README rather than RDoc
     tags:
-      - style
+      - supermarket
       - readme
     summary: |
       Writing cookbook documentation in RDoc has been deprecated in favour of
@@ -378,7 +376,6 @@ rules:
     tags:
       - style
       - definitions
-      - lwrp
     summary: |
       Chef definitions are an older approach to creating a higher-level
       abstraction for a group of resources. Unlike Custom Resources they are not
@@ -705,7 +702,7 @@ rules:
   - code: FC025
     name: Prefer chef_gem to compile-time gem install
     tags:
-      - style
+      - correctness
       - deprecated
     summary: |
       This warning is shown if:
@@ -1061,7 +1058,6 @@ rules:
     name: Execute resource used to run git commands
     tags:
       - style
-      - recipe
     summary: |
       This warning is shown if you declare an `execute` resource that uses git.
       If the command you are attempting to execute is supported by the `git`
@@ -1089,7 +1085,6 @@ rules:
     name: Execute resource used to run curl or wget commands
     tags:
       - style
-      - recipe
       - portability
     summary: |
       This warning is shown if you use an execute resource to run the `curl` or
@@ -1258,7 +1253,6 @@ rules:
     name: Prefer Mixlib::ShellOut
     tags:
       - portability
-      - processes
     summary: |
       Normally to execute an operating system command with Chef you would use
       a built-in resource such as the `execute` resource.
@@ -1430,6 +1424,7 @@ rules:
     tags:
       - correctness
       - metadata
+      - supermarket
     summary: |
       This warning is shown if a cookbook includes an invalid version string in
       the metadata file. Cookbooks that do not follow this format cannot be
@@ -1438,7 +1433,7 @@ rules:
     name: Cookbook should have version metadata
     tags:
       - metadata
-      - correctness
+      - supermarket
     summary: |
       This warning is shown if a cookbook does not contain a version string in
       the metadata file. Without a version string cookbooks will be uploaded as
@@ -1483,7 +1478,6 @@ rules:
       - metadata
       - supermarket
       - chef12
-    applies_to: '>= 12.0.0'
     summary: |
       This warning is shown if a cookbook does not include the source_url property in
       its metadata file.  source_url is used to point to the source location for the
@@ -1506,7 +1500,7 @@ rules:
       - metadata
     summary: |
       This warning is shown if a cookbook does not include the chef_version property
-      in its metadata file. chef_version is used to clearly specify chef version 
+      in its metadata file. chef_version is used to clearly specify chef version
       compatibility to users and to chef-client.
     examples:
       - title: Metadata without chef_version
@@ -1585,8 +1579,8 @@ rules:
       - supermarket
     summary: |
       This warning is shown if a cookbook uses an invalid platform for a supports property
-      in its metadata file. Using a valid platform enables users to identify supported 
-      cookbooks and ensures that searching on Supermarket with platforms specified 
+      in its metadata file. Using a valid platform enables users to identify supported
+      cookbooks and ensures that searching on Supermarket with platforms specified
       returns the supported cookbooks.
     examples:
       - title: Metadata with an invalid supports property
@@ -1605,7 +1599,7 @@ rules:
       - style
       - license
     summary: |
-      This warning is shown if a cookbook is missing a LICENSE file. Including a LICENSE 
+      This warning is shown if a cookbook is missing a LICENSE file. Including a LICENSE
       file enables users to understand whether they can use, change or distribute a cookbook.
   - code: FC073
     name: Root alias file shadowing non-alias file
