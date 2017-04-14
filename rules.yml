@@ -1197,7 +1197,32 @@ rules:
       the cookbook `metadata.rb` file. It's a good idea to specify a name in
       your cookbook metadata to avoid breakage if the name of the containing
       directory changes. Additionally, Chef 12 requires the name to be included
-      in the metadata.rb file
+      in the metadata.rb file.
+    examples:
+      - title: Metadata without the name attribute
+        text: |
+          This example matches the FC045 because it lacks the name property
+        code: |
+          # Don't do this
+          maintainer 'The Authors'
+          maintainer_email 'you@example.com'
+          license 'All Rights Reserved'
+          description 'Installs/Configures test'
+          long_description 'Installs/Configures test'
+          version '0.1.0'
+      - title: Modified version
+        text: |
+          This modified example would not match the FC045 because it contains the
+          name property
+        code: |
+          # Do this instead
+          name 'example'
+          maintainer 'The Authors'
+          maintainer_email 'you@example.com'
+          license 'All Rights Reserved'
+          description 'Installs/Configures test'
+          long_description 'Installs/Configures test'
+          version '0.1.0'
   - code: FC046
     name: Attribute assignment uses assign unless nil
     tags:
