@@ -1761,3 +1761,40 @@ rules:
       problematic and should be avoided as a run failure will still result in the
       node data being saved to the Chef server. If search is used to put nodes into
       production state this may result in non-functioning nodes being used.
+  - code: FC076
+    name: Metadata uses the deprecated "conflicts" keyword
+    tags:
+      - style
+      - deprecated
+      - metadata
+    summary: |
+      This warning is shown if metadata.rb includes the conflicts metadata. Conflicts
+      metadata was often used to inform users of an incompatible cookbook that should
+      not be used in conjunction with the current cookbook. Conflicts was never actually
+      implemented in chef-client and its inclusion had no actual impact on the chef-client
+      run.
+    examples:
+      - title: Metadata with the deprecated conflicts keyword
+        code: |
+          # Don't do this
+          name 'example'
+          version '1.0.0'
+          conflicts 'foo'
+  - code: FC077
+    name: Metadata uses the deprecated "replaces" keyword
+    tags:
+      - style
+      - deprecated
+      - metadata
+    summary: |
+      This warning is shown if metadata.rb includes the replaces metadata. Replaces
+      metadata was often used to inform users of a previous cookbook that was replaced
+      by the current cookbook. Replaces was never actually implemented in chef-client
+      and its inclusion had no actual impact on the chef-client run.
+    examples:
+      - title: Metadata with the deprecated replaces keyword
+        code: |
+          # Don't do this
+          name 'example'
+          version '1.0.0'
+          replaces 'foo'
