@@ -1780,6 +1780,11 @@ rules:
           name 'example'
           version '1.0.0'
           conflicts 'foo'
+      - title: Metadata without conflicts keywork
+        code: |
+          # Do this instead
+          name 'example'
+          version '1.0.0'
   - code: FC077
     name: Metadata uses the deprecated "replaces" keyword
     tags:
@@ -1798,3 +1803,8 @@ rules:
           name 'example'
           version '1.0.0'
           replaces 'foo'
+      - title: Metadata without replaces keywork
+        code: |
+          # Do this instead
+          name 'example'
+          version '1.0.0'
