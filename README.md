@@ -1,6 +1,6 @@
 # foodcritic-site
 
-[![Built on Travis](https://travis-ci.org/foodcritic/foodcritic-site.svg?branch=master)](https://travis-ci.org/foodcritic/foodcritic-site)
+[![Built on Travis](https://travis-ci.org/Foodcritic/foodcritic-site.svg?branch=master)](https://travis-ci.org/Foodcritic/foodcritic-site)
 
 This is the website for Foodcritic, a lint tool for Chef cookbooks.
 
