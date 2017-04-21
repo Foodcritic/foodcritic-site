@@ -541,7 +541,7 @@ rules:
     summary: |
       This rule has been deprecated due to the frequency of false positives.
       See the discussion against
-      [issue #30](https://github.com/acrmp/foodcritic/issues/30) for more
+      [issue #30](https://github.com/foodcritic/foodcritic/issues/30) for more
       detail.
     deprecated: true
   - code: FC021
@@ -968,7 +968,7 @@ rules:
     name: Template uses node attribute directly
     summary: |
       This rule has been deprecated. See the discussion against
-      [issue #60](https://github.com/acrmp/foodcritic/issues/60) for more
+      [issue #60](https://github.com/foodcritic/foodcritic/issues/60) for more
       detail.
     deprecated: true
   - code: FC037
