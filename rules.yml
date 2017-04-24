@@ -1860,7 +1860,8 @@ rules:
     summary: |
       This warning is shown if a cookbook metadata depends on the 'partial_search' cookbook. Chef
       12 included the partial partial search functionality in chef-client itself so this cookbook
-      is no longer necessary.
+      is no longer necessary. See the [Chef search filtering docs](https://docs.chef.io/chef_search.html#filter-search-results)
+      for usage of the built in functionality.
   - code: FC082
     name: node.set or node.set_unless used to set node attributes
     tags:
