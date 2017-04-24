@@ -1808,3 +1808,83 @@ rules:
           # Do this instead
           name 'example'
           version '1.0.0'
+  - code: FC078
+    name: Ensure cookbook shared under an OSI-approved open source license
+    tags:
+      - opensource
+      - license
+      - supermarket
+    summary: |
+      This warning is shown if metadata.rb includes a cookbook license value that is not denoted
+      as being an OSI approved open source license by [SPDX.org](https://spdx.org/licenses/).
+  - code: FC079
+    name: Deprecated easy_install_package resource usage
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if a cookbook uses the legacy easy_install_package resource. This
+      resource was deprecated in Chef 12 and removed in Chef 13.
+  - code: FC080
+    name: User resource uses deprecated supports property
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if a user resource includes the supports property, which was deprecated
+      in Chef 12 and removed in Chef 13. See the example below for properly specificing values
+      previously in supports
+    examples:
+      - title: User resource using deprecated supports property
+        code: |
+          # Don't do this
+          user 'betty' do
+            action :create
+            supports({
+              manage_home: true,
+              non_unique: true
+            })
+          end
+      - title: Metadata properly specifying manage_home and non_unique
+        code: |
+          # Do this instead
+          user 'betty' do
+            action :create
+            manage_home true
+            non_unique true
+          end
+  - code: FC081
+    name: Cookbook depends on the partial_search cookbook
+    tags:
+      - chef12
+    summary: |
+      This warning is shown if a cookbook metadata depends on the 'partial_search' cookbook. Chef
+      12 included the partial partial search functionality in chef-client itself so this cookbook
+      is no longer necessary. See the [Chef search filtering docs](https://docs.chef.io/chef_search.html#filter-search-results)
+      for usage of the built in functionality.
+  - code: FC082
+    name: node.set or node.set_unless used to set node attributes
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if node.set or node.set_unless are used to set a value on the node.
+      Both of these methods for setting attributes will be removed in Chef 14 as the
+      names were confusing and particularly attractive to new users. These methods permanently
+      set the attribute on the node even if the cookbook code is later removed, which is
+      generally not what the user wants. If this functionality is in fact what you desire you
+      should use node.normal or node.normal_unless, which are functionally equivalent. In genera
+      users should fully understand the implications of choosing a particular attribute level by
+      reading the [Chef attributes type documentation](https://docs.chef.io/attributes.html#attribute-types).
+    examples:
+      - title: node.set used to set a node attribute value
+        code: |
+          # Don't do this
+          node.set['foo']['bar'] = 'baz'
+          node.set_unless['foo1']['bar1'] = 'baz1'
+
+      - title: node.normal used to set a node attribute
+        code: |
+          # Do this instead if you actually want persistent attributes
+          node.normal['foo']['bar'] = 'baz'
+          node.normal_unless['foo1']['bar1'] = 'baz1'
