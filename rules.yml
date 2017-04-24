@@ -1780,7 +1780,7 @@ rules:
           name 'example'
           version '1.0.0'
           conflicts 'foo'
-      - title: Metadata without conflicts keywork
+      - title: Metadata without conflicts keyword
         code: |
           # Do this instead
           name 'example'
@@ -1803,7 +1803,7 @@ rules:
           name 'example'
           version '1.0.0'
           replaces 'foo'
-      - title: Metadata without replaces keywork
+      - title: Metadata without replaces keyword
         code: |
           # Do this instead
           name 'example'
