@@ -1888,3 +1888,26 @@ rules:
           # Do this instead if you actually want persistent attributes
           node.normal['foo']['bar'] = 'baz'
           node.normal_unless['foo1']['bar1'] = 'baz1'
+  - code: FC083
+    name: Execute resource using deprecated 'path' property
+    tags:
+      - deprecated
+      - chef12
+    summary: |
+      This warning is shown if an execute resource includes the deprecated path property, which
+      was removed in Chef 12. You should instead using the environment property to set the PATH
+      variable.
+    examples:
+      - title: execute source with the path property
+        code: |
+          # Don't do this
+          execute 'some_binary some_option' do
+            path '/some/path/to/my/bin'
+          end
+
+      - title: execute resource with the environment property
+        code: |
+          # Do this instead
+          execute 'some_binary some_option' do
+            environment 'PATH' => '/some/path/to/my/bin'
+          end
