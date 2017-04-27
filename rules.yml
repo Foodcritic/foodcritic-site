@@ -1911,3 +1911,11 @@ rules:
           execute 'some_binary some_option' do
             environment 'PATH' => '/some/path/to/my/bin'
           end
+  - code: FC084
+    name: Deprecated Chef::REST class used
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::REST class used in a cookbook.
+      Chef::REST has been replaced by Chef::ServerAPI. See [Chef Deprecation CHEF-9](https://docs.chef.io/deprecations_chef_rest.html)
