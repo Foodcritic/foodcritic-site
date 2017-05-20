@@ -1966,3 +1966,53 @@ rules:
               create_something_api_call
             end
           end
+  - code: FC086 
+    name: Use databag helper methods to load data bag items
+    tags:
+      - style
+    summary: |
+      This warning is shown if the data bag helper methods are not used to load data from a data bag. The data bag helpers are much simpler and also work for both encrypted and plain text data bags. See the [Chef Data Bag Docs](https://docs.chef.io/data_bags.html#use-data-bags) for additional usage details 
+    examples:
+      - title: Accessing a data bag item without the helper
+        code: |
+          # Don't do this
+          plain_text_data = Chef::DataBagItem.load('foo', 'bar')
+
+          encrypted_data = Chef::DataBagItem.load('foo2', 'bar2')
+
+      - title: Accessing a data bag item using the helper
+        code: |
+          # Do do this
+          plain_text_data = data_bag_item('foo', 'bar')
+
+          encrypted_data = data_bag_item('foo2', 'bar2')
+  - code: FC087
+    name: Library maps provider with deprecated Chef::Platform.set
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::Platform.set method is used to define the platforms a HWRP runs on. This method has been removed from Chef 13. To create resources that map to specific platforms you should instead consider using provides in a custom resource. See the [Chef Custom Resources Documention](https://docs.chef.io/custom_resources.html#provides) for additional details.
+  - code: FC088
+    name: Prefer Mixlib::Shellout over deprecated Chef::Mixin::Command
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::Mixin::Command class is used to shell out within a recipe, library, or resource. This class has been removed in Chef 13 and Mixlib::Shellout should be used instead.
+  - code: FC089
+    name: Prefer Mixlib::Shellout over deprecated Chef::ShellOut
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::ShellOut class is used to shell out within a recipe, library, or resource. This class has been removed in Chef 13 and Mixlib::ShellOut should be used instead.
+    examples:
+      - title: Using Chef::Shellout to Shellout
+        code: |
+          # Don't do this
+          Chef::ShellOut.new("some_command").run_command
+      - title: Mixlib::ShellOut version
+        code: |
+          # Do this instead
+          Mixlib::ShellOut.new('some_command').run_command
