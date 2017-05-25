@@ -1919,3 +1919,100 @@ rules:
     summary: |
       This warning is shown if the deprecated Chef::REST class used in a cookbook.
       Chef::REST has been replaced by Chef::ServerAPI. See [Chef Deprecation CHEF-9](https://docs.chef.io/deprecations_chef_rest.html)
+  - code: FC085
+    name: Resource using new_resource.updated_by_last_action to converge resource
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if a LWRP or Custom Resource uses new_resource.updated_by_last_action(true) to signal that a resource has been updated, and thus any necessary notification should fire. This method of controlling resource state was necessary with Chef 10 and earlier, however it is no longer required when writing resources. Additionally updated_by_last_action often leads to resources notifying on every Chef run, regardless of actual change. By utilizing use_inline_resources it is no longer necessary to manually control resource state when resources are comprised of built-in Chef resources such as execute, file, directory, etc. For resources comprised of non-Chef Ruby code, such as API calls or Mixlib::ShellOut calls, resource state should be controlled with the converge_by helper. Converge_by wraps code that would make a change to the node, allowing for why-run mode and providing a friendly log message on convergence.
+    examples:
+      - title: LWRP with all chef resources using new_resource.updated_by_last_action(true)
+        code: |
+          # Don't do this
+          action :create do
+            directory '/foo/bar' do
+              action :create
+            end
+
+            new_resource.updated_by_last_action(true)
+          end
+
+      - title: LWRP with all chef resources using use_inline_resources
+        code: |
+          # Do this instead
+          use_inline_resources
+
+          action :create do
+            directory '/foo/bar' do
+              action :create
+            end
+          end
+
+      - title: LWRP with custom ruby using new_resource.updated_by_last_action(true)
+        code: |
+          # Don't do this
+          action :create do
+            create_something_api_call
+
+            new_resource.updated_by_last_action(true)
+          end
+
+      - title: LWRP with custom ruby using converge_by
+        code: |
+          # Do do this
+          action :create do
+            converge_by "create something" do
+              create_something_api_call
+            end
+          end
+  - code: FC086 
+    name: Use databag helper methods to load data bag items
+    tags:
+      - style
+    summary: |
+      This warning is shown if the data bag helper methods are not used to load data from a data bag. The data bag helpers are much simpler and also work for both encrypted and plain text data bags. See the [Chef Data Bag Docs](https://docs.chef.io/data_bags.html#use-data-bags) for additional usage details 
+    examples:
+      - title: Accessing a data bag item without the helper
+        code: |
+          # Don't do this
+          plain_text_data = Chef::DataBagItem.load('foo', 'bar')
+
+          encrypted_data = Chef::DataBagItem.load('foo2', 'bar2')
+
+      - title: Accessing a data bag item using the helper
+        code: |
+          # Do do this
+          plain_text_data = data_bag_item('foo', 'bar')
+
+          encrypted_data = data_bag_item('foo2', 'bar2')
+  - code: FC087
+    name: Library maps provider with deprecated Chef::Platform.set
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::Platform.set method is used to define the platforms a HWRP runs on. This method has been removed from Chef 13. To create resources that map to specific platforms you should instead consider using provides in a custom resource. See the [Chef Custom Resources Documention](https://docs.chef.io/custom_resources.html#provides) for additional details.
+  - code: FC088
+    name: Prefer Mixlib::Shellout over deprecated Chef::Mixin::Command
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::Mixin::Command class is used to shell out within a recipe, library, or resource. This class has been removed in Chef 13 and Mixlib::Shellout should be used instead.
+  - code: FC089
+    name: Prefer Mixlib::Shellout over deprecated Chef::ShellOut
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if the deprecated Chef::ShellOut class is used to shell out within a recipe, library, or resource. This class has been removed in Chef 13 and Mixlib::ShellOut should be used instead.
+    examples:
+      - title: Using Chef::Shellout to Shellout
+        code: |
+          # Don't do this
+          Chef::ShellOut.new("some_command").run_command
+      - title: Mixlib::ShellOut version
+        code: |
+          # Do this instead
+          Mixlib::ShellOut.new('some_command').run_command
