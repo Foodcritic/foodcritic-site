@@ -1859,7 +1859,7 @@ rules:
       - chef12
     summary: |
       This warning is shown if a cookbook metadata depends on the 'partial_search' cookbook. Chef
-      12 included the partial search functionality in chef-client itself so this cookbook is no 
+      12 included the partial search functionality in chef-client itself so this cookbook is no
       longer necessary. See the [Chef search filtering docs](https://docs.chef.io/chef_search.html#filter-search-results)
       for usage of the built in functionality.
   - code: FC082
@@ -1966,19 +1966,19 @@ rules:
               create_something_api_call
             end
           end
-  - code: FC086 
+  - code: FC086
     name: Use databag helper methods to load data bag items
     tags:
       - style
     summary: |
-      This warning is shown if the data bag helper methods are not used to load data from a data bag. The data bag helpers are much simpler and also work for both encrypted and plain text data bags. See the [Chef Data Bag Docs](https://docs.chef.io/data_bags.html#use-data-bags) for additional usage details 
+      This warning is shown if the data bag helper methods are not used to load data from a data bag. The data bag helpers are much simpler and also work for both encrypted and plain text data bags. See the [Chef Data Bag Docs](https://docs.chef.io/data_bags.html#use-data-bags) for additional usage details
     examples:
       - title: Accessing a data bag item without the helper
         code: |
           # Don't do this
           plain_text_data = Chef::DataBagItem.load('foo', 'bar')
 
-          encrypted_data = Chef::DataBagItem.load('foo2', 'bar2')
+          encrypted_data = Chef::EncryptedDataBagItem.load('foo2', 'bar2')
 
       - title: Accessing a data bag item using the helper
         code: |
@@ -2011,7 +2011,7 @@ rules:
       - title: Using Chef::Shellout to Shellout
         code: |
           # Don't do this
-          Chef::ShellOut.new("some_command").run_command
+          Chef::ShellOut.new('some_command').run_command
       - title: Mixlib::ShellOut version
         code: |
           # Do this instead
