@@ -2016,3 +2016,47 @@ rules:
         code: |
           # Do this instead
           Mixlib::ShellOut.new('some_command').run_command
+  - code: FC091
+    name: Use property not attribute in custom resources
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a custom resource defines attributes instead of properties. While Chef will do the right thing this may not always be the case and custom resources should be properly defined using properties.
+    examples:
+      - title: Defining attributes in a custom resource
+        code: |
+          # Don't do this
+          attribute :source, String, name_attribute: true
+
+          action :create do
+            # some resource code here
+          end
+      - title: Defining properties in a custom resource
+        code: |
+          # Do this instead
+          property :source, String, name_property: true
+
+          action :create do
+            # some resource code here
+          end
+  - code: FC092
+    name: Custom resources should not declare actions
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a custom resource declare its actions instead of letting Chef determine the set of actions defined in the resource itself.
+    examples:
+      - title: Declaring actions in a custom resource
+        code: |
+          # Don't do this
+          actions :create
+
+          action :create do
+            # some resource code here
+          end
+      - title: Not declaring actions in a custom resource
+        code: |
+          # Do this instead
+          action :create do
+            # some resource code here
+          end
