@@ -908,7 +908,7 @@ rules:
         code: |
           # Do this instead
           template '/etc/foo' do
-            notifies :restart, 'service[foo]', :immediately
+            notifies :restart, 'service[foo]', :immediate
           end
   - code: FC033
     name: Missing template
