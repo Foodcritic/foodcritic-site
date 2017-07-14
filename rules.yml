@@ -1698,7 +1698,7 @@ rules:
     summary: |
       This warning is shown if a cookbook defines its attributes in the metadata.rb file.
       Attributes defined in the metadata.rb file are not used by the chef-client or
-      Supermarket and often become out of sync with the attributes files / readme.rb.
+      Supermarket and often become out of sync with the attributes files or readme.
       Documentation for attributes should instead be placed in the readme itself.
     examples:
       - title: Metadata with a deprecated attributes keyword
