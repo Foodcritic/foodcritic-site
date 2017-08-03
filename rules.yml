@@ -1873,7 +1873,7 @@ rules:
       names were confusing and particularly attractive to new users. These methods permanently
       set the attribute on the node even if the cookbook code is later removed, which is
       generally not what the user wants. If this functionality is in fact what you desire you
-      should use node.normal or node.normal_unless, which are functionally equivalent. In genera
+      should use node.normal or node.normal_unless, which are functionally equivalent. In general
       users should fully understand the implications of choosing a particular attribute level by
       reading the [Chef attributes type documentation](https://docs.chef.io/attributes.html#attribute-types).
     examples:
