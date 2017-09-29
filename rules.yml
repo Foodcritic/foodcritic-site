@@ -2060,3 +2060,16 @@ rules:
           action :create do
             # some resource code here
           end
+  - code: FC093
+    name: Generated README text needs updating
+    tags:
+      - readme
+      - supermarket
+    summary: |
+      This warning is shown if you used `chef generate cookbook` to create a new
+      cookbook and didn't change boilerplate text in README file. You need to
+      update it with real description.
+
+      FC093 will match README files containing `TODO: Enter the cookbook description here.`
+
+      * [https://docs.chef.io/ctl_chef.html#chef-generate-cookbook](https://docs.chef.io/ctl_chef.html#chef-generate-cookbook)
