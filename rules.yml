@@ -2073,3 +2073,116 @@ rules:
       FC093 will match README files containing `TODO: Enter the cookbook description here.`
 
       * [https://docs.chef.io/ctl_chef.html#chef-generate-cookbook](https://docs.chef.io/ctl_chef.html#chef-generate-cookbook)
+  - code: FC094
+    name: Cookbook uses deprecated filesystem2 ohai plugin data
+    tags:
+      - deprecated
+      - chef15
+    summary: |
+      This warning is shown if a cookbook uses the node['filesystem2'] attributes. In Chef 13 the filesystem Ohai plugin was replaced with the filesystem2 plugin. Data is written to both locations for now, but the existing node['filesystem2'] namespace will be removed in Chef 15 (April 2019). See [https://docs.chef.io/deprecations_ohai_filesystem.html](https://docs.chef.io/deprecations_ohai_filesystem.html) and [https://docs.chef.io/deprecations_ohai_filesystem_v2.html](https://docs.chef.io/deprecations_ohai_filesystem_v2.html).
+    examples:
+      - title: Using node['filesystem2']
+        code: |
+          # Don't do this
+          blocksize = node['filesystem2']['by_device']['/dev/disk1s1']['blocksize']
+      - title: Using node['filesystem']
+        code: |
+          # Do this
+          blocksize = node['filesystem']['by_device']['/dev/disk1s1']['blocksize']
+  - code: FC095
+    name: Cookbook uses deprecated cloud_v2 ohai plugin data
+    tags:
+      - deprecated
+      - chef15
+    summary: |
+      This warning is shown if a cookbook uses the node['cloud_v2'] attributes. In Chef 13 the cloud Ohai plugin was replaced with the cloud_v2 plugin. Data is written to both locations for now, but the existing node['cloud_v2'] namespace will be removed in Chef 15 (April 2019). See [https://docs.chef.io/deprecations_ohai_cloud.html](https://docs.chef.io/deprecations_ohai_cloud.html) and [https://docs.chef.io/deprecations_ohai_cloud_v2.html](https://docs.chef.io/deprecations_ohai_cloud_v2.html).
+    examples:
+      - title: Using node['cloud_v2']
+        code: |
+          # Don't do this
+          provider = node['cloud_v2']['provider']
+      - title: Using node['cloud']
+        code: |
+          # Do this
+          provider = node['cloud']['provider']
+  - code: FC096
+    name: Cookbook uses deprecated libvirt virtualization ohai data
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the node['virtualization'] attributes populated by the libvirt Ohai plugin. This plugin polls data from libvirt, but requires installing an extra gem into the Chef installation, and therefore is not heavily used. In Chef 14 these attributes will be moved into their own namespace at node['libvirt']. See [https://docs.chef.io/deprecations_ohai_libvirt_plugin.html](https://docs.chef.io/deprecations_ohai_libvirt_plugin.html).
+    examples:
+      - title: Using node['virtualization'] libvirt attributes
+        code: |
+          # Don't do this
+          uri = node['virtualzation']['uri']
+      - title: Using node['libvirt'] attributes
+        code: |
+          # Do this
+          uri = node['libvirt']['uri']
+  - code: FC097
+    name: Deprecated Chef::Mixin::LanguageIncludeAttribute mixin used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the Chef::Mixin::LanguageIncludeAttribute mixin. This mixin was deprecated with the release of Chef 11 and will be removed in Chef 14. Chef::DSL::IncludeAttribute should be used in its place.
+    examples:
+      - title: Using LanguageIncludeAttribute mixin
+        code: |
+          # Don't do this
+          include Chef::Mixin::LanguageIncludeAttribute
+      - title: Using IncludeAttribute DSL
+        code: |
+          # Do this
+          include Chef::DSL::IncludeAttribute
+  - code: FC098
+    name: Deprecated Chef::Mixin::RecipeDefinitionDSLCore mixin used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the Chef::Mixin::RecipeDefinitionDSLCore mixin. This mixin was deprecated with the release of Chef 11 and will be removed in Chef 14. Chef::DSL::Recipe should be used in its place.
+    examples:
+      - title: Using RecipeDefinitionDSLCore mixin
+        code: |
+          # Don't do this
+          include Chef::Mixin::RecipeDefinitionDSLCore
+      - title: Using Recipe DSL
+        code: |
+          # Do this
+          include Chef::DSL::Recipe
+  - code: FC099
+    name: Deprecated Chef::Mixin::LanguageIncludeRecipe mixin used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the Chef::Mixin::LanguageIncludeRecipe mixin. This mixin was deprecated with the release of Chef 11 and will be removed in Chef 14. Chef::DSL::IncludeRecipe should be used in its place.
+    examples:
+      - title: Using LanguageIncludeRecipe mixin
+        code: |
+          # Don't do this
+          include Chef::Mixin::LanguageIncludeRecipe
+      - title: Using Recipe DSL
+        code: |
+          # Do this
+          include Chef::DSL::IncludeRecipe
+  - code: FC100
+    name: Deprecated Chef::Mixin::Language mixin used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the Chef::Mixin::Language mixin. This mixin was deprecated with the release of Chef 11 and will be removed in Chef 14. Chef::DSL::PlatformIntrospection or/and Chef::DSL::DataQuery should be used in its place.
+    examples:
+      - title: Using Language mixin
+        code: |
+          # Don't do this
+          include Chef::Mixin::Language
+      - title: Using DataQuery/PlatformIntrospection DSL
+        code: |
+          # Use one or both of these
+          include Chef::DSL::PlatformIntrospection
+          include Chef::DSL::DataQuery
