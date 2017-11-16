@@ -2077,9 +2077,9 @@ rules:
     name: Cookbook uses deprecated filesystem2 ohai plugin data
     tags:
       - deprecated
-      - chef15
+      - chef14
     summary: |
-      This warning is shown if a cookbook uses the node['filesystem2'] attributes. In Chef 13 the filesystem Ohai plugin was replaced with the filesystem2 plugin. Data is written to both locations for now, but the existing node['filesystem2'] namespace will be removed in Chef 15 (April 2019). See [https://docs.chef.io/deprecations_ohai_filesystem.html](https://docs.chef.io/deprecations_ohai_filesystem.html) and [https://docs.chef.io/deprecations_ohai_filesystem_v2.html](https://docs.chef.io/deprecations_ohai_filesystem_v2.html).
+      This warning is shown if a cookbook uses the node['filesystem2'] attributes. In Chef 13 the filesystem Ohai plugin was replaced with the filesystem2 plugin. Data is written to both locations for now, but the existing node['filesystem2'] namespace will be removed in Chef 14 (April 2018). See [https://docs.chef.io/deprecations_ohai_filesystem.html](https://docs.chef.io/deprecations_ohai_filesystem.html) and [https://docs.chef.io/deprecations_ohai_filesystem_v2.html](https://docs.chef.io/deprecations_ohai_filesystem_v2.html).
     examples:
       - title: Using node['filesystem2']
         code: |
@@ -2093,9 +2093,9 @@ rules:
     name: Cookbook uses deprecated cloud_v2 ohai plugin data
     tags:
       - deprecated
-      - chef15
+      - chef14
     summary: |
-      This warning is shown if a cookbook uses the node['cloud_v2'] attributes. In Chef 13 the cloud Ohai plugin was replaced with the cloud_v2 plugin. Data is written to both locations for now, but the existing node['cloud_v2'] namespace will be removed in Chef 15 (April 2019). See [https://docs.chef.io/deprecations_ohai_cloud.html](https://docs.chef.io/deprecations_ohai_cloud.html) and [https://docs.chef.io/deprecations_ohai_cloud_v2.html](https://docs.chef.io/deprecations_ohai_cloud_v2.html).
+      This warning is shown if a cookbook uses the node['cloud_v2'] attributes. In Chef 13 the cloud Ohai plugin was replaced with the cloud_v2 plugin. Data is written to both locations for now, but the existing node['cloud_v2'] namespace will be removed in Chef 14 (April 2018). See [https://docs.chef.io/deprecations_ohai_cloud.html](https://docs.chef.io/deprecations_ohai_cloud.html) and [https://docs.chef.io/deprecations_ohai_cloud_v2.html](https://docs.chef.io/deprecations_ohai_cloud_v2.html).
     examples:
       - title: Using node['cloud_v2']
         code: |
