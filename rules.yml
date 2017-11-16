@@ -2186,3 +2186,72 @@ rules:
           # Use one or both of these
           include Chef::DSL::PlatformIntrospection
           include Chef::DSL::DataQuery
+  - code: FC101
+    name: Deprecated deploy resource used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the deploy resource. The deploy and deploy_revision resources have been deprecated as of Chef 13.6, and will be removed in Chef 14 (April 2018). See [https://docs.chef.io/deprecations_deploy_resource.html](https://docs.chef.io/deprecations_deploy_resource.html).
+  - code: FC102
+    name: Deprecated Chef::DSL::Recipe::FullDSL class used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the Chef::DSL::Recipe::FullDSL Ruby module.
+    examples:
+      - title: Using Chef::DSL::Recipe::FullDSL module
+        code: |
+          # Don't do this
+          include Chef::DSL::Recipe::FullDSL
+      - title: Using Chef::DSL::Recipe
+        code: |
+          # Use this instead
+          include Chef::DSL::Recipe
+  - code: FC103
+    name: Deprecated :uninstall action in chocolatey_package used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook includes a chocolatey_package resource using the :uninstall action. The :remove action should be used instead.
+  - code: FC104
+    name: Use the :run action in ruby_block instead of :create
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a cookbook includes a ruby_block resource with the :create action or another resource notifies a ruby_block with the :create action. The :create action is an alias to :run and the :run action should be used instead as it is more clear what action Chef will be performing.
+  - code: FC105
+    name: Deprecated erl_call resource used
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook uses the erl_call resource. The erl_call resource has been deprecated as of Chef 13.7, and will be removed in Chef 14 (April 2018). See [https://docs.chef.io/deprecations_erl_call_resource.html](https://docs.chef.io/deprecations_erl_call_resource.html).
+  - code: FC106
+    name: Use the plist_hash property in launchd instead of hash
+    tags:
+      - deprecated
+      - chef13
+    summary: |
+      This warning is shown if a cookbook includes a launchd resource with a 'hash' property. In Chef 13.0 this property was renamed to plist_hash to avoid conflicts with Ruby itself.
+  - code: FC107
+    name: Resource uses epic_fail instead of ignore_failure
+    tags:
+      - deprecated
+      - chef14
+    summary: |
+      This warning is shown if a cookbook includes a resource with the 'epic_fail' property. The epic fail property is an alias to 'ignore_failure', which better describes the desired outcome. In Chef 14 (April 2018) epic_fail will be removed.
+  - code: FC108
+    name: Resource should not define a property named 'name'
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a resource defines a property with the name of 'name'. Chef itself creates the name property and it's not necessary or desirable to define it again. This property can be removed from any resource.
+  - code: FC109
+    name: Use platform-specific package resources instead of provider property
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a cookbook contains a package resource that defines its provider. If a specific package resource is needed for a package install that resource should be used instead of the package resource with a provider specified. The package resource wraps multiple platform specific platform specific package resources and dynamically uses the correct provider under the hood such as rpm_package or apt_package. Defining the provider outside of this logic will not always produce the intended results and may cause failures.
