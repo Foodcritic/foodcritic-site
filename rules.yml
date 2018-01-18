@@ -415,52 +415,9 @@ rules:
 
   - code: FC017
     name: LWRP does not notify when updated
-    tags:
-      - correctness
-      - lwrp
     summary: |
-      This warning means that the LWRP will not currently trigger
-      [notifications](https://docs.chef.io/chef/resources.html#notifications)
-      to other resources. This can be a source of difficult to track down bugs.
-
-      There are two ways of marking that the resource state has changed:
-
-      * Surround the action in a `converge_by` block. This is done when
-        [implementing Why-Run support](http://dougireton.com/blog/2013/01/07/creating-an-lwrp-part-2/)
-        and will also ensure notifications are sent.
-      * Add `use_inline_resources` to the top of the provider file. This means
-        that the resources you define in your action are run in their own
-        [self-contained Chef run](https://docs.chef.io/lwrp_common_inline_compile.html)
-        and your provider will send notifications if any of the nested resources
-        in your actions are updated. This approach is available from Chef 11 and is
-        the default behavior in Chef 13.
-    examples:
-      - title: Provider that does not send notifications
-        text: |
-          This example matches the FC017 rule because it does not mark that its
-          state has changed and will therefore not send notifications.
-        code: |
-          # Don't do this
-          action :create do
-            # create action implementation
-          end
-      - title: Modified version
-        text: |
-          Any of the three approaches shown below will ensure that
-          notifications are sent correctly.
-        code: |
-          # Approach 1: Using converge_by
-          action :create do
-            converge_by("Creating my_resource #{new_resource.name}") do
-              # create action implementation
-            end
-          end
-
-          # Approach 2: Using use_inline_resources
-          use_inline_resources
-          action :create do
-            # create action implementation
-          end
+      This rule has been deprecated. Chef 13 now uses use_inline_resources by default so LWRPs always notify updates.
+    deprecated: true
   - code: FC018
     name: LWRP uses deprecated notification syntax
     tags:
@@ -1434,15 +1391,9 @@ rules:
       contact the maintainer.
   - code: FC057
     name: Library provider does not declare use_inline_resources
-    tags:
-      - correctness
     summary: |
-      This warning is shown if a library provider does not specify
-      use_inline_resources. use_inline_resources executes provider resources in
-      their own run context, outside the normal recipe run context. Doing so is
-      considered best practice as it avoids issues with notifying when the
-      provider resource is updated, and also avoids the need to uniquely name
-      resources in the provider.
+      This rule has been deprecated. Chef 13 now uses use_inline_resources by default so LWRPs always notify updates.
+    deprecated: true
   - code: FC058
     name: Library provider declares use_inline_resources and declares action_<name> methods
     tags:
@@ -1457,16 +1408,9 @@ rules:
       unexpected behavior in some versions of Chef.
   - code: FC059
     name: LWRP provider does not declare use_inline_resources
-    tags:
-      - correctness
-      - lwrp
     summary: |
-      This warning is shown if a LWRP provider does not specify
-      use_inline_resources. use_inline_resources executes provider resources in
-      their own run context, outside the normal recipe run context. Doing so is
-      considered best practice as it avoids issues with notifying when the
-      provider resource is updated, and also avoids the need to uniquely name
-      resources in the provider.
+      This rule has been deprecated. Chef 13 now uses use_inline_resources by default so LWRPs always notify updates.
+    deprecated: true
   - code: FC060
     name: LWRP provider declares use_inline_resources and declares \#action_<name> methods
     tags:
