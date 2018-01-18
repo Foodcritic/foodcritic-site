@@ -2238,3 +2238,60 @@ rules:
           apt_package 'foo' do
             action :install
           end
+  - code: FC110
+    name: Script resources should use 'code' property not 'command' property
+    tags:
+      - deprecation
+      - chef13
+    summary: |
+      This warning is shown if a cookbook contains a script resource that defines the script in a 'command' property instead of a 'code' property
+    examples:
+      - title: Using the command property
+        code: |
+          # Don't do this
+          script 'foo' do
+            command 'run some things'
+          end
+      - title: Using the code property
+        code: |
+          # Do this instead
+          script 'foo' do
+            code 'run some things'
+          end
+  - code: FC111
+    name: search using deprecated sort flag
+    tags:
+      - deprecation
+      - chef13
+    summary: |
+      This warning is shown if a cookbook uses search with the 'sort' flag. This flag hasn't worked since Chef Server 9 and the flag was removed in Chef 13.
+  - code: FC112
+    name: Resource using deprecated dsl_name method
+    tags:
+      - deprecation
+      - chef13
+    summary: |
+      This warning is shown if a cookbook contains a resource using the deprecated dsl_name method.
+    examples:
+      - title: Using dsl_name
+        code: |
+          # Don't do this
+          my_resource = MyResource.dsl_name
+      - title: Using resource_name
+        code: |
+          # Do this instead
+          my_resource = MyResource.resource_name
+  - code: FC113
+    name: Resource declares deprecated use_inline_resources
+    tags:
+      - deprecation
+      - chef15
+    summary: |
+      This warning is shown if a cookbook contains a resource using the deprecated use_inline_resources method. use_inline_resources is the default with Chef 13 and this call can be removed from all resources unless Chef 12 compatibility is needed.
+  - code: FC114
+    name: Cookbook uses legacy Ohai config syntax
+    tags:
+      - deprecation
+      - chef13
+    summary: |
+      This warning is shown if a cookbook uses the legacy Ohai configuration syntax. This syntax needs to be used for Chef/Ohai 13. See [https://docs.chef.io/deprecations_ohai_legacy_config.html](https://docs.chef.io/deprecations_ohai_legacy_config.html) for more information.
