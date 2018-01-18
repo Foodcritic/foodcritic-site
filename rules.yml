@@ -2243,6 +2243,19 @@ rules:
       - chef14
     summary: |
       This warning is shown if a cookbook includes a resource with the 'epic_fail' property. The epic fail property is an alias to 'ignore_failure', which better describes the desired outcome. In Chef 14 (April 2018) epic_fail will be removed.
+    examples:
+      - title: epic_fail usage
+        code: |
+          # Don't do this
+          execute 'some command' do
+            epic_fail true
+          end
+      - title: ignore_failure usage
+        code: |
+          # Do this instead
+          execute 'some command' do
+            ignore_failure true
+          end
   - code: FC108
     name: Resource should not define a property named 'name'
     tags:
@@ -2254,4 +2267,18 @@ rules:
     tags:
       - correctness
     summary: |
-      This warning is shown if a cookbook contains a package resource that defines its provider. If a specific package resource is needed for a package install that resource should be used instead of the package resource with a provider specified. The package resource wraps multiple platform specific platform specific package resources and dynamically uses the correct provider under the hood such as rpm_package or apt_package. Defining the provider outside of this logic will not always produce the intended results and may cause failures.
+      This warning is shown if a cookbook contains a package resource that defines its provider. If a specific package resource is needed for a package install that resource should be used instead of the package resource with a provider specified. The package resource wraps multiple platform specific platform specific package resources and dynamically uses the correct provider under the hood such as rpm_package or apt_package. Defining the provider outside of this logic will not always produce the intended results and may cause failures. It should also be noted that unless there is a specific reason for using a specific package resource you should always use 'package' and let Chef dynamically choose the right platform specific package resource at runtime.
+    examples:
+      - title: Specifying the provider
+        code: |
+          # Don't do this
+          package 'foo' do
+            provider Chef::Provider::Package::Apt
+            action :install
+          end
+      - title: Using a specific package resource
+        code: |
+          # Do this instead
+          apt_package 'foo' do
+            action :install
+          end
