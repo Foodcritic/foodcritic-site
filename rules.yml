@@ -2205,7 +2205,19 @@ rules:
     tags:
       - correctness
     summary: |
-      This warning is shown if a resource defines a property with the name of 'name'. Chef itself creates the name property and it's not necessary or desirable to define it again. This property can be removed from any resource.
+      This warning is shown if a resource defines a property with the name of ':name'. Chef itself creates this same name property by default, and it's not necessary or desirable to define it again. This property can be removed from any resource. It should be noted that setting 'name_property: true' on properties with any other name is still entirely valid as that allows overriding the name specified when using the resource.
+    examples:
+      - title: Specifying a :name property
+        code: |
+          # Don't do this
+          property :name, String, name_property: true
+          property :foo, String
+          property :bar, String
+      - title: Omitting the name property
+        code: |
+          # Do this instead
+          property :foo, String
+          property :bar, String
   - code: FC109
     name: Use platform-specific package resources instead of provider property
     tags:
