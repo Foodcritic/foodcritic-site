@@ -12,5 +12,5 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
-set :docset_version, '1.0.0'
+set :docset_version, '12.3.0'
 page 'dash/Foodcritic.xml', :layout => false

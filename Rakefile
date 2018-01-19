@@ -11,7 +11,8 @@ end
 
 desc 'Deploy the website'
 task :deploy => [:test] do
-  sh 'middleman build'
   Rake::Task['docset'].invoke
+  sh 'mv docset/build/Foodcritic.tgz source/dash/Foodcritic.tgz'
+  sh 'middleman build'
   sh 'middleman s3_sync'
 end
