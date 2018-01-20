@@ -1,3 +1,13 @@
+def foodcritic_version
+  require "net/http"
+  require "json"
+  require "time"
+
+  uri = URI("https://rubygems.org/api/v1/gems/foodcritic.json")
+  response = Net::HTTP.get(uri)
+  JSON.parse(response)["version"]
+end
+
 activate :syntax
 activate :livereload
 set :hostname, 'www.foodcritic.io'
@@ -12,5 +22,5 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
-set :docset_version, '12.3.0'
+set :docset_version, "#{foodcritic_version}/#{Time.now.to_i}"
 page 'dash/Foodcritic.xml', :layout => false
