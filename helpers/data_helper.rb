@@ -1,5 +1,5 @@
-require 'pathname'
-require 'yaml'
+require "pathname"
+require "yaml"
 
 module DataHelper
 

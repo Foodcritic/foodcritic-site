@@ -17,7 +17,7 @@ module FoodCritic
       end
 
       def sqlite_installed?
-        %x{sqlite3 -version}
+        `sqlite3 -version`
         $?.success?
       end
 
@@ -30,11 +30,11 @@ module FoodCritic
       end
 
       def insert_rules(path, rules)
-        insert_rows(path, 'Error', rules.map{|m| m['code']})
+        insert_rows(path, "Error", rules.map { |m| m["code"] })
       end
 
       def insert_api_methods(path, api_methods)
-        insert_rows(path, 'Method', api_methods.map{|m| m['name']})
+        insert_rows(path, "Method", api_methods.map { |m| m["name"] })
       end
 
       def insert_rows(path, type, names)
@@ -46,10 +46,10 @@ module FoodCritic
       end
 
       def sqlite(index_path, stmt)
-        result = %x{sqlite3 -bail -batch #{index_path} << "EOF"
+        result = `sqlite3 -bail -batch #{index_path} << "EOF"
 #{stmt}
 EOF
-}
+`
         raise "Problem running sqlite statement: #{stmt}" unless $?.success?
         result
       end

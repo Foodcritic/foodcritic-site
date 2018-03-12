@@ -1,27 +1,27 @@
-require_relative 'spec_helper'
-require_relative '../helpers/format_helper'
+require_relative "spec_helper"
+require_relative "../helpers/format_helper"
 
 describe FormatHelper do
-  let(:h){ Object.new.extend(FormatHelper) }
+  let(:h) { Object.new.extend(FormatHelper) }
 
   describe "#in_two" do
     describe :yielding do
       it "doesn't yield if the values are empty" do
         h.in_two([]) do
-          fail 'Should not yield'
+          raise "Should not yield"
         end
       end
       it "yields once for one value" do
-        yield_count(['foo']).must_equal 1
+        yield_count(["foo"]).must_equal 1
       end
       (2..10).each do |count|
         it "yields twice for #{count} values" do
-          yield_count(['foo'] * count).must_equal 2
+          yield_count(["foo"] * count).must_equal 2
         end
       end
       def yield_count(values)
         count = 0
-        h.in_two(values){ count += 1 }
+        h.in_two(values) { count += 1 }
         count
       end
     end
