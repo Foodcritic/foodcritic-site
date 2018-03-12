@@ -1862,8 +1862,7 @@ rules:
   - code: FC085
     name: Resource using new_resource.updated_by_last_action to converge resource
     tags:
-      - deprecated
-      - chef13
+      - correctness
     summary: |
       This warning is shown if a LWRP or Custom Resource uses new_resource.updated_by_last_action(true) to signal that a resource has been updated, and thus any necessary notification should fire. This method of controlling resource state was necessary with Chef 10 and earlier, however it is no longer required when writing resources. Additionally updated_by_last_action often leads to resources notifying on every Chef run, regardless of actual change. By utilizing use_inline_resources it is no longer necessary to manually control resource state when resources are comprised of built-in Chef resources such as execute, file, directory, etc. For resources comprised of non-Chef Ruby code, such as API calls or Mixlib::ShellOut calls, resource state should be controlled with the converge_by helper. Converge_by wraps code that would make a change to the node, allowing for why-run mode and providing a friendly log message on convergence.
     examples:
