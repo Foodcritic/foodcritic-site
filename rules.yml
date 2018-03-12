@@ -2291,3 +2291,55 @@ rules:
       - chef13
     summary: |
       This warning is shown if a cookbook uses the legacy Ohai configuration syntax. This syntax needs to be used for Chef/Ohai 13. See [https://docs.chef.io/deprecations_ohai_legacy_config.html](https://docs.chef.io/deprecations_ohai_legacy_config.html) for more information.
+  - code: FC115
+    name: Custom resource contains a name_property that is required
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a custom resource property has both required: true and name_property: true set. name_property: true instructs Chef to use the name of the resource unless the user has explicitly passed a value for the property. Since there is always a value for properties with name_property set there is no need to set required: true.
+    examples:
+      - title: Setting both name_property and required
+        code: |
+          # Don't do this
+          property :my_property_name, String, name_property: true, required: true
+      - title: Setting just name_property
+        code: |
+          # Do this instead
+          property :my_property_name, String, name_property: true
+  - code: FC117
+    name: Do not use kind_of in custom resource properties
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a custom resource property sets its type using kind_of. kind_of was used in LWRPs to set type in attributes, but should not be used in custom resources. Instead simply set the Ruby type for the property after the name as shown below.
+    examples:
+      - title: Using kind_of in a custom_resource property
+        code: |
+          # Don't do this
+          property :my_property_name, kind_of: String
+      - title: Using just a Ruby type
+        code: |
+          # Do this instead
+          property :my_property_name, String
+  - code: FC118
+    name: Resource property setting name_attribute vs. name_property
+    tags:
+      - correctness
+    summary: |
+      This warning is shown if a custom resource property sets name_attribute: true instead of name_property: true. This is generally found in LWRPs that were updated to custom resources as name_attribute was valid for LWRPs. They are currently aliases, but this may eventually cause failures.
+    examples:
+      - title: Using name_attribute in a custom resource
+        code: |
+          # Don't do this
+          property :my_property_name, String, name_attribute: true
+      - title: Using name_property in a custom resource
+        code: |
+          # Do this instead
+          property :my_property_name, String, name_property: true
+  - code: FC119
+    name: windows_task :change action no longer exists in Chef 13
+    tags:
+      - chef13
+      - deprecation
+    summary: |
+      This warning is shown if a cookbook uses a windows_task resource with the action of :change. The original windows_task resource in the Windows cookbook required creating the task with the :create action and updating it with the :change action. In Chef 13 the windows_task shipped built into chef-client and was rewritten to properly update if necessary when using the :create action. Cookbooks using both :create and :change will need to be tested on Chef 13 using just the :create action.
