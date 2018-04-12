@@ -2236,7 +2236,7 @@ rules:
   - code: FC110
     name: Script resources should use 'code' property not 'command' property
     tags:
-      - deprecation
+      - deprecated
       - chef13
     summary: |
       This warning is shown if a cookbook contains a script resource that defines the script in a 'command' property instead of a 'code' property
@@ -2256,14 +2256,14 @@ rules:
   - code: FC111
     name: search using deprecated sort flag
     tags:
-      - deprecation
+      - deprecated
       - chef13
     summary: |
       This warning is shown if a cookbook uses search with the 'sort' flag. This flag hasn't worked since Chef Server 9 and the flag was removed in Chef 13.
   - code: FC112
     name: Resource using deprecated dsl_name method
     tags:
-      - deprecation
+      - deprecated
       - chef13
     summary: |
       This warning is shown if a cookbook contains a resource using the deprecated dsl_name method.
@@ -2279,14 +2279,14 @@ rules:
   - code: FC113
     name: Resource declares deprecated use_inline_resources
     tags:
-      - deprecation
+      - deprecated
       - chef15
     summary: |
       This warning is shown if a cookbook contains a resource using the deprecated use_inline_resources method. use_inline_resources is the default with Chef 13 and this call can be removed from all resources unless Chef 12 compatibility is needed.
   - code: FC114
     name: Cookbook uses legacy Ohai config syntax
     tags:
-      - deprecation
+      - deprecated
       - chef13
     summary: |
       This warning is shown if a cookbook uses the legacy Ohai configuration syntax. This syntax needs to be used for Chef/Ohai 13. See [https://docs.chef.io/deprecations_ohai_legacy_config.html](https://docs.chef.io/deprecations_ohai_legacy_config.html) for more information.
@@ -2305,6 +2305,25 @@ rules:
         code: |
           # Do this instead
           property :my_property_name, String, name_property: true
+  - code: FC116
+    name: Cookbook depends on the deprecated compat_resource cookbook
+    tags:
+      - deprecated
+    summary: |
+      This warning is shown if a cookbook depends on the now deprecated compat_resource cookbook. This cookbook backported newer Chef 12 functionality to older Chef 12 client releases. It was primarily used to provide custom resource fuctionality to 12.0-12.4 clients, but also backported several resources such as apt_repository and yum_repository. Chef 12 is end of life and this cookbook wasn't necessary after Chef 12.19. Cookbooks should no longer rely on this cookbook, but should instead increase the minimal chef_version requirements in their metadata.
+    examples:
+      - title: depending on compat_resource
+        code: |
+          # Don't do this in metadata.rb
+          name 'my_cookbook'
+          depends 'compat_resource'
+          chef_version '>= 12.0'
+
+      - title: require a newer chef-client release
+        code: |
+          # Do this instead in metadata.rb
+          name 'my_cookbook'
+          chef_version '>= 12.19'
   - code: FC117
     name: Do not use kind_of in custom resource properties
     tags:
@@ -2339,6 +2358,6 @@ rules:
     name: windows_task :change action no longer exists in Chef 13
     tags:
       - chef13
-      - deprecation
+      - deprecated
     summary: |
       This warning is shown if a cookbook uses a windows_task resource with the action of :change. The original windows_task resource in the Windows cookbook required creating the task with the :create action and updating it with the :change action. In Chef 13 the windows_task shipped built into chef-client and was rewritten to properly update if necessary when using the :create action. Cookbooks using both :create and :change will need to be tested on Chef 13 using just the :create action.
