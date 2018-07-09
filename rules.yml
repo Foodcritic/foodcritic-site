@@ -331,10 +331,13 @@ rules:
       - supermarket
       - readme
     summary: |
+      Deprecated. These haven't existed since the very early days of Chef, and
+      the check for README.md files will catch what this rule used to.
       Writing cookbook documentation in RDoc has been deprecated in favour of
       [Markdown format](https://daringfireball.net/projects/markdown/syntax).
       This rule will match any cookbook that has a `README.rdoc` file in the
       root directory.
+    deprecated: true
   - code: FC013
     name: Use file_cache_path rather than hard-coding tmp paths
     tags:
@@ -1239,7 +1242,7 @@ rules:
           # Do this instead
           node.normal['foo'] = 'bar'
   - code: FC048
-    name: Prefer Mixlib::ShellOut
+    name: Prefer shell_out helper method to shelling out with Ruby
     tags:
       - portability
     summary: |
@@ -2361,3 +2364,21 @@ rules:
       - deprecated
     summary: |
       This warning is shown if a cookbook uses a windows_task resource with the action of :change. The original windows_task resource in the Windows cookbook required creating the task with the :create action and updating it with the :change action. In Chef 13 the windows_task shipped built into chef-client and was rewritten to properly update if necessary when using the :create action. Cookbooks using both :create and :change will need to be tested on Chef 13 using just the :create action.
+  - code: FC120
+    name: Do not set the name property directly on a resource
+    tags:
+      - correctness
+    summary: |
+      A resource's name should not be set via the `name` property.
+  - code: FC121
+    name: Cookbook depends on cookbook made obsolete by Chef 14
+    tags:
+      - correctness
+    summary: |
+      The `build-essential`, `dmg`, `chef_handler`, `chef_hostname`, `mac_os_x`, `swap`, or `sysctl` cookbooks have been deprecated by built-in resources included with Chef 14. Removing these dependencies requires that metadata be changed to `chef_version >= 14.0`.
+  - code: FC122
+    name: Use the build_essential resource instead of the recipe
+    tags:
+      - deprecated
+    summary: |
+      Chef 14 introduces a built-in resource, `build_essential`, which deprecates the `build-essential` cookbook. The cookbook has included this resource since v5.0.0.
