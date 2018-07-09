@@ -1242,7 +1242,7 @@ rules:
           # Do this instead
           node.normal['foo'] = 'bar'
   - code: FC048
-    name: Prefer Mixlib::ShellOut
+    name: Prefer shell_out helper method to shelling out with Ruby
     tags:
       - portability
     summary: |
