@@ -331,10 +331,13 @@ rules:
       - supermarket
       - readme
     summary: |
+      Deprecated. These haven't existed since the very early days of Chef, and
+      the check for README.md files will catch what this rule used to.
       Writing cookbook documentation in RDoc has been deprecated in favour of
       [Markdown format](https://daringfireball.net/projects/markdown/syntax).
       This rule will match any cookbook that has a `README.rdoc` file in the
       root directory.
+    deprecated: true
   - code: FC013
     name: Use file_cache_path rather than hard-coding tmp paths
     tags:
