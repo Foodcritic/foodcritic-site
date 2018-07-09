@@ -2361,3 +2361,9 @@ rules:
       - deprecated
     summary: |
       This warning is shown if a cookbook uses a windows_task resource with the action of :change. The original windows_task resource in the Windows cookbook required creating the task with the :create action and updating it with the :change action. In Chef 13 the windows_task shipped built into chef-client and was rewritten to properly update if necessary when using the :create action. Cookbooks using both :create and :change will need to be tested on Chef 13 using just the :create action.
+  - code: FC120
+    name: Do not set the name property directly on a resource
+    tags:
+      - correctness
+    summary: |
+      A resource's name should not be set via the `name` property.
