@@ -2367,3 +2367,9 @@ rules:
       - correctness
     summary: |
       A resource's name should not be set via the `name` property.
+  - code: FC122
+    name: Use the build_essential resource instead of the recipe
+    tags:
+      - deprecated
+    summary: |
+      Chef 14 introduces a built-in resource, `build_essential`, which deprecates the `build-essential` cookbook. The cookbook has included this resource since v5.0.0.
