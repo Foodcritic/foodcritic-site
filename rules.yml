@@ -134,7 +134,7 @@ rules:
           not suitable for 'rolling up' into a loop.
         code: |
           # It's shorter to do this
-          %w{erlang-base erlang-corba erlang-crypto rabbitmq-server}.each do |pkg|
+          %w(erlang-base erlang-corba erlang-crypto rabbitmq-server).each do |pkg|
             package pkg do
               action :upgrade
             end
