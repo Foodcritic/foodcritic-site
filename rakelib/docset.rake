@@ -1,5 +1,7 @@
 require "rake/clean"
 require "yaml"
+require "pathname"
+
 require_relative "../lib/foodcritic/site/docset_generator"
 
 output_root = Pathname.new("docset/build")
