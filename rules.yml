@@ -2382,3 +2382,9 @@ rules:
       - deprecated
     summary: |
       Chef 14 introduces a built-in resource, `build_essential`, which deprecates the `build-essential` cookbook. The cookbook has included this resource since v5.0.0.
+  - code: FC123
+    name: Content of a cookbook file is larger than 1MB
+    tags:
+      - files
+    summary: |
+      Chef cookbooks should not be used to distribute binary files. This is better done via artifact stores such as Artifactory/Nexus or via a simple FTP/HTTP site.
