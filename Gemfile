@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "guard", "~> 2.14.0"
 gem "guard-minitest", "~> 2.4.4"
-gem "kramdown", "~> 1.13.0"
+gem "kramdown", "~> 2.1.0"
 gem "middleman-core", "~> 4.3.5"
 gem "middleman-livereload", "~> 3.4.3"
 gem "middleman-s3_sync", "~> 4.0.0"
