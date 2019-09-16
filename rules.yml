@@ -571,7 +571,7 @@ rules:
           first resource.
         code: |
           # Don't do this
-          %w{rover fido}.each do |pet_name|
+          %w(rover fido).each do |pet_name|
             execute 'feed_pet' do
               command "echo 'Feeding: #{pet_name}'; touch '/tmp/#{pet_name}'"
               not_if { ::File.exists?("/tmp/#{pet_name}")}
@@ -582,7 +582,7 @@ rules:
           By making the resource name change for each iteration of the loop we avoid this behaviour.
         code: |
           # Do this instead
-          %w{rover fido}.each do |pet_name|
+          %w(rover fido).each do |pet_name|
             execute "feed_pet_#{pet_name}" do
               command "echo 'Feeding: #{pet_name}'; touch '/tmp/#{pet_name}'"
               not_if { ::File.exists?("/tmp/#{pet_name}")}
