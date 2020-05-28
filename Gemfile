@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "guard", "~> 2.16.1"
+gem "guard", "~> 2.16.2"
 gem "guard-minitest", "~> 2.4.4"
 gem "kramdown", "~> 2.2.1"
 gem "middleman-core", "~> 4.3.7"
